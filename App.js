@@ -6,6 +6,7 @@ import LoginSignup from './src/screens/LoginSignup';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import Home from './src/screens/Home';
+import ProductDetail from './src/screens/ProductDetail';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -51,6 +52,11 @@ const App = props => {
           <Stack.Screen
             name="Drawer"
             component={drawer}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ProductDetail"
+            component={ProductDetail}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
