@@ -5,6 +5,7 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import LoginSignup from './src/screens/LoginSignup';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
+import ForgotPassword from './src/screens/ForgotPassword';
 import EditProfile from './src/screens/EditProfile';
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
@@ -64,6 +65,11 @@ const App = props => {
           <Stack.Screen
             name="Signup"
             component={Signup}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
             options={{headerShown: false}}
           />
           <Stack.Screen
