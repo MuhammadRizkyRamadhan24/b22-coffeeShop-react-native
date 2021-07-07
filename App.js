@@ -5,8 +5,12 @@ import WelcomeScreen from './src/screens/WelcomeScreen';
 import LoginSignup from './src/screens/LoginSignup';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
+import EditProfile from './src/screens/EditProfile';
 import Home from './src/screens/Home';
+import Search from './src/screens/Search';
 import ProductDetail from './src/screens/ProductDetail';
+import {DrawerContent} from './src/screens/DrawerContent';
+import {StyleSheet} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -17,12 +21,23 @@ const Drawer = createDrawerNavigator();
 
 const drawer = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerStyle={styles.drawer}
+      drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Search" component={Search} />
+      <Drawer.Screen name="EditProfile" component={EditProfile} />
       {/* <Text>Test</Text> */}
     </Drawer.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  drawer: {
+    backgroundColor: 'transparent',
+    width: 324,
+  },
+});
 
 const App = props => {
   return (

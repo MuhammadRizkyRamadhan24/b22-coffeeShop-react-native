@@ -26,14 +26,19 @@ class Home extends Component {
           <View style={styles.header}>
             <TouchableOpacity style={[styles.profile, styles.marginIcon]} />
             <TouchableOpacity style={styles.marginIcon}>
-              <MaterialIcons name="shopping-cart" color="#9A9A9D" size={30} />
+              <MaterialIcons name="shopping-cart" color="#8a8a8a" size={30} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.marginIcon}>
               <MaterialIcons
                 name="chat-bubble-outline"
-                color="#9A9A9D"
+                color="#8a8a8a"
                 size={30}
               />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.openDrawer()}
+              style={styles.marginIconMenu}>
+              <MaterialIcons name="menu-open" color="#8a8a8a" size={40} />
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>A good coffee is a good day</Text>
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    marginTop: 66,
+    marginTop: 48,
     width: 320,
     height: 'auto',
     flexDirection: 'row-reverse',
@@ -115,10 +120,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    backgroundColor: '#9A9A9D',
+    backgroundColor: '#8a8a8a',
   },
   marginIcon: {
     marginHorizontal: 8,
+  },
+  marginIconMenu: {
+    marginRight: 143,
   },
   title: {
     fontFamily: 'Poppins-Bold',
