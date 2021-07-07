@@ -111,12 +111,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
+    alignItems: 'center',
     marginTop: 48,
     width: 320,
     height: 'auto',
     flexDirection: 'row-reverse',
   },
   profile: {
+    marginRight: 0,
     width: 30,
     height: 30,
     borderRadius: 20,
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   marginIconMenu: {
-    marginRight: 143,
+    marginRight: 154,
   },
   title: {
     fontFamily: 'Poppins-Bold',
