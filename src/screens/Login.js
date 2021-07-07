@@ -42,7 +42,8 @@ export default class Login extends Component {
               style={styles.input}
               placeholder="Enter your password"
             />
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ForgotPassword')}>
               <Text style={styles.forpas}>Forgot password?</Text>
             </TouchableOpacity>
             <TouchableOpacity
