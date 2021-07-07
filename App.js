@@ -15,6 +15,8 @@ import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import Cart from './src/screens/Cart';
+import Delivery from './src/screens/Delivery';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -72,6 +74,16 @@ const App = props => {
           <Stack.Screen
             name="ProductDetail"
             component={ProductDetail}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Cart"
+            component={Cart}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Delivery"
+            component={Delivery}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
