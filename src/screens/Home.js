@@ -25,7 +25,9 @@ class Home extends Component {
         <View style={styles.wrapper}>
           <View style={styles.header}>
             <TouchableOpacity style={[styles.profile, styles.marginIcon]} />
-            <TouchableOpacity style={styles.marginIcon}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Cart')}
+              style={styles.marginIcon}>
               <MaterialIcons name="shopping-cart" color="#8a8a8a" size={30} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.marginIcon}>
