@@ -18,6 +18,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Cart from './src/screens/Cart';
 import Delivery from './src/screens/Delivery';
+import Seemore from './src/screens/Seemore';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -75,6 +76,11 @@ const App = props => {
           <Stack.Screen
             name="Drawer"
             component={drawer}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Seemore"
+            component={Seemore}
             options={{headerShown: false}}
           />
           <Stack.Screen
