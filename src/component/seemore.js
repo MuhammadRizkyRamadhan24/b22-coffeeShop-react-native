@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const seemore = () => {
+const seemore = props => {
+  console.log(props.func);
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.func}>
       <Text style={styles.text}>See more</Text>
     </TouchableOpacity>
   );
