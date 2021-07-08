@@ -49,7 +49,7 @@ class Home extends Component {
               <View style={styles.subtitle}>
                 <Subtitle title="Favorite Products" />
               </View>
-              <Seemore />
+              <Seemore func={() => this.props.navigation.navigate('Seemore')} />
             </View>
             <ScrollView
               horizontal={true}
@@ -69,7 +69,7 @@ class Home extends Component {
               <View style={styles.subtitle}>
                 <Subtitle title="Coffee" />
               </View>
-              <Seemore />
+              <Seemore func={() => this.props.navigation.navigate('Seemore')} />
             </View>
             <ScrollView
               horizontal={true}
@@ -87,7 +87,7 @@ class Home extends Component {
               <View style={styles.subtitle}>
                 <Subtitle title="Non Coffee" />
               </View>
-              <Seemore />
+              <Seemore func={() => this.props.navigation.navigate('Seemore')} />
             </View>
             <ScrollView
               horizontal={true}

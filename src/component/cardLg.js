@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 270,
     marginTop: 30,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 30,
   },
   cardImage: {
     width: 168,
