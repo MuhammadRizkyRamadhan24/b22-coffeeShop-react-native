@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  // ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Radio} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -64,7 +58,9 @@ export default class Delivery extends Component {
             </Radio>
           </Radio.Group>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Payment')}
+          style={styles.button}>
           <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
         </TouchableOpacity>
       </View>
