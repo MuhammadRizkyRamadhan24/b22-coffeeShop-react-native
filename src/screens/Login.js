@@ -5,19 +5,43 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {Input} from 'native-base';
-
 import background from '../../assets/login.png';
 
-export default class Login extends Component {
+import {connect} from 'react-redux';
+import {authLogin} from '../redux/actions/auth';
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
+      isLoading: true,
     };
   }
+
+  login = () => {
+    this.props.authLogin(this.state.email, this.state.password).then(() => {
+      if (this.props.auth.errMsg === '') {
+        ToastAndroid.showWithGravity(
+          'Login success',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+        return this.props.navigation.navigate('Drawer');
+      } else {
+        ToastAndroid.showWithGravity(
+          `${this.props.auth.errMsg}`,
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+      }
+    });
+  };
+
   render() {
     return (
       <ImageBackground source={background} style={styles.background}>
@@ -26,7 +50,7 @@ export default class Login extends Component {
           <View style={styles.formInput}>
             <Input
               value={this.state.email}
-              onChange={e => this.setState({email: e.target.value})}
+              onChangeText={val => this.setState({email: val})}
               type="email"
               variant="underlined"
               color="#fff"
@@ -35,7 +59,7 @@ export default class Login extends Component {
             />
             <Input
               value={this.state.password}
-              onChange={e => this.setState({password: e.target.value})}
+              onChangeText={val => this.setState({password: val})}
               type="password"
               variant="underlined"
               color="#fff"
@@ -46,9 +70,7 @@ export default class Login extends Component {
               onPress={() => this.props.navigation.navigate('ForgotPassword')}>
               <Text style={styles.forpas}>Forgot password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Drawer')}
-              style={styles.buttonYellow}>
+            <TouchableOpacity onPress={this.login} style={styles.buttonYellow}>
               <Text style={styles.fontButton}>Login</Text>
             </TouchableOpacity>
             <Text style={styles.fontDetail}>or login in with</Text>
@@ -61,6 +83,14 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = {authLogin};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   background: {
