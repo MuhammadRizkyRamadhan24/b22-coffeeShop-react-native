@@ -6,19 +6,20 @@ import LoginSignup from './src/screens/LoginSignup';
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import ForgotPassword from './src/screens/ForgotPassword';
+import Profile from './src/screens/Profile';
 import EditProfile from './src/screens/EditProfile';
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import ProductDetail from './src/screens/ProductDetail';
 import {DrawerContent} from './src/screens/DrawerContent';
 import {StyleSheet} from 'react-native';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Cart from './src/screens/Cart';
 import Delivery from './src/screens/Delivery';
 import Seemore from './src/screens/Seemore';
+import Payment from './src/screens/Payment';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -31,6 +32,7 @@ const drawer = () => {
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Search" component={Search} />
       <Drawer.Screen name="EditProfile" component={EditProfile} />
+      <Drawer.Screen name="Profile" component={Profile} />
       {/* <Text>Test</Text> */}
     </Drawer.Navigator>
   );
@@ -96,6 +98,11 @@ const App = props => {
           <Stack.Screen
             name="Delivery"
             component={Delivery}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Payment"
+            component={Payment}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
