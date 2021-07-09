@@ -5,12 +5,15 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {Input} from 'native-base';
 
 import background from '../../assets/signup.png';
+import {connect} from 'react-redux';
+import {authRegister} from '../redux/actions/auth';
 
-export default class Signup extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +22,29 @@ export default class Signup extends Component {
       phoneNumber: '',
     };
   }
+
+  register = () => {
+    const {email, password, phoneNumber} = this.state;
+    this.props.authRegister(email, phoneNumber, password).then(() => {
+      if (this.props.auth.errMsg === '') {
+        ToastAndroid.showWithGravity(
+          'Signup success',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+        return this.props.navigation.navigate('Login');
+      } else {
+        ToastAndroid.showWithGravity(
+          `${this.props.auth.errMsg}`,
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+      }
+    });
+  };
+
   render() {
+    console.log(this.state);
     return (
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>
@@ -27,7 +52,7 @@ export default class Signup extends Component {
           <View style={styles.formInput}>
             <Input
               value={this.state.email}
-              onChange={e => this.setState({email: e.target.value})}
+              onChangeText={val => this.setState({email: val})}
               type="email"
               variant="underlined"
               color="#fff"
@@ -36,7 +61,7 @@ export default class Signup extends Component {
             />
             <Input
               value={this.state.password}
-              onChange={e => this.setState({password: e.target.value})}
+              onChangeText={val => this.setState({password: val})}
               type="password"
               variant="underlined"
               color="#fff"
@@ -45,7 +70,7 @@ export default class Signup extends Component {
             />
             <Input
               value={this.state.phoneNumber}
-              onChange={e => this.setState({phoneNumber: e.target.value})}
+              onChangeText={val => this.setState({phoneNumber: val})}
               type="text"
               variant="underlined"
               color="#fff"
@@ -53,7 +78,7 @@ export default class Signup extends Component {
               placeholder="Enter your phone number"
             />
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Login')}
+              onPress={this.register}
               style={styles.buttonBrown}>
               <Text style={styles.fontButton}>Create Account</Text>
             </TouchableOpacity>
@@ -66,6 +91,14 @@ export default class Signup extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = {authRegister};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
 
 const styles = StyleSheet.create({
   background: {
