@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {REACT_APP_BASE_URL} from '@env';
 
 const cardLg = props => {
   return (
@@ -9,11 +10,11 @@ const cardLg = props => {
           <Image
             style={styles.cardImage}
             source={{
-              uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+              uri: `${REACT_APP_BASE_URL}/static/images/${props.image}`,
             }}
           />
-          <Text style={styles.itemName}>Hazelnut Latte</Text>
-          <Text style={styles.itemPrice}>IDR 25.000</Text>
+          <Text style={styles.itemName}>{props.name}</Text>
+          <Text style={styles.itemPrice}>IDR {props.price}</Text>
         </View>
       </View>
     </TouchableOpacity>
