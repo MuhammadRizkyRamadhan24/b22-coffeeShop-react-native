@@ -6,47 +6,108 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../component/cardSm';
 
-export default class Seemore extends Component {
+import {connect} from 'react-redux';
+import {getDataByCategories} from '../redux/actions/products';
+
+class Seemore extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
+
+  getData = () => {
+    const {token} = this.props.auth;
+    const id = this.props.route.params.id;
+    this.props.getDataByCategories(id, token).then(() => {
+      this.setState({
+        isLoading: false,
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.getData();
+  }
+
   render() {
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.wrapperNav}>
-          <View style={styles.buttonBack}>
-            <TouchableOpacity>
-              <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
-            </TouchableOpacity>
+      <>
+        {this.state.isLoading !== true ? (
+          <View style={styles.wrapper}>
+            <View style={styles.wrapperNav}>
+              <View style={styles.buttonBack}>
+                <TouchableOpacity>
+                  <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <Text style={styles.titleScreen}>Favorite Products</Text>
+              </View>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.wrapperCard}>
+                {/* <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card /> */}
+                {this.props.products.data.map(d => (
+                  <Card
+                    func={() =>
+                      this.props.navigation.navigate('ProductDetail', {
+                        id: d.id,
+                      })
+                    }
+                    key={d.id}
+                    name={d.name}
+                    price={d.price}
+                    image={d.image}
+                  />
+                ))}
+              </View>
+            </ScrollView>
           </View>
-          <View>
-            <Text style={styles.titleScreen}>Favorite Products</Text>
+        ) : (
+          <View style={styles.wrapperSpinner}>
+            <Spinner color="#000" />
           </View>
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.wrapperCard}>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </View>
-        </ScrollView>
-      </View>
+        )}
+      </>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  products: state.products,
+});
+
+const mapDispatchToProps = {getDataByCategories};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Seemore);
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#BCBABA',
     alignItems: 'center',
+  },
+  wrapperSpinner: {
+    flex: 1,
+    backgroundColor: '#BCBABA',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wrapperNav: {
     alignItems: 'center',
