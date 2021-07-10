@@ -1,21 +1,13 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Head from '../component/headDrawer';
 
 export function DrawerContent(props) {
   return (
     <View style={styles.wrapper}>
-      <View style={styles.wrapperProfile}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-          }}
-        />
-        <Text style={styles.name}>Muhammad Rizky Ramadhan</Text>
-        <Text style={styles.email}>zidan.muh88@gmail.com</Text>
-      </View>
+      <Head />
       <View style={styles.wrapperItem}>
         <DrawerItem
           style={styles.item}
