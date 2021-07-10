@@ -6,18 +6,104 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 import {Radio} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {REACT_APP_BASE_URL} from '@env';
 
-export default class Delivery extends Component {
+import {connect} from 'react-redux';
+import {createTransaction} from '../redux/actions/transactions';
+import {deleteAllItems} from '../redux/actions/carts';
+
+class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: false,
+      payment_method: '',
+      delivery_method: '',
+      item_id: [],
+      item_amount: [],
+      item_variant: [],
+      item_additional_price: [],
+      subTotal: '',
+      tax: '',
+      shipping: '',
+      total: '',
     };
   }
+
+  setData = () => {
+    this.setState({
+      delivery_method: this.props.route.params.orders.delivery_method,
+      item_id: this.props.route.params.orders.item_id,
+      item_amount: this.props.route.params.orders.item_amount,
+      item_variant: this.props.route.params.orders.item_variant,
+      item_additional_price:
+        this.props.route.params.orders.item_additional_price,
+      subTotal: this.props.route.params.orders.subTotal,
+      tax: this.props.route.params.orders.tax,
+      shipping: this.props.route.params.orders.shipping,
+      total: this.props.route.params.orders.total,
+    });
+  };
+
+  componentDidMount() {
+    this.setData();
+  }
+
+  payment = () => {
+    const {
+      item_id,
+      item_amount,
+      item_variant,
+      item_additional_price,
+      payment_method,
+      delivery_method,
+    } = this.state;
+    const {token} = this.props.auth;
+    this.props
+      .createTransaction(
+        item_id,
+        item_amount,
+        item_variant,
+        item_additional_price,
+        delivery_method,
+        payment_method,
+        token,
+      )
+      .then(() => {
+        ToastAndroid.showWithGravity(
+          'Payment success',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+        this.props.navigation.navigate('Home');
+        return this.props.deleteAllItems();
+      })
+      .catch(err => {
+        console.log(err);
+        ToastAndroid.showWithGravity(
+          'Something wrong',
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
+      });
+  };
+
+  alert = () => {
+    Alert.alert('Payment', 'Do you want to pay for it?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => this.payment()},
+    ]);
+  };
+
   render() {
+    console.log(this.state);
     console.log(this.props.route.params.orders);
     return (
       <View style={styles.wrapper}>
@@ -36,54 +122,24 @@ export default class Delivery extends Component {
         </View>
         <View style={styles.wrapperCard}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.card}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-                }}
-              />
-              <View style={styles.wrapperMiddleCard}>
-                <Text style={styles.middleText}>Cold Brew</Text>
-                <Text style={styles.middleText}>1</Text>
-                <Text style={styles.middleText}>R</Text>
+            {this.props.carts.items.map(d => (
+              <View key={d.id} style={styles.card}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: `${REACT_APP_BASE_URL}/static/images/${d.image}`,
+                  }}
+                />
+                <View style={styles.wrapperMiddleCard}>
+                  <Text style={styles.middleText}>{d.name}</Text>
+                  <Text style={styles.middleText}>{d.amount}</Text>
+                  <Text style={styles.middleText}>{d.variant}</Text>
+                </View>
+                <View style={styles.wrapperRightCard}>
+                  <Text style={styles.rightText}>IDR {d.end_price}</Text>
+                </View>
               </View>
-              <View style={styles.wrapperRightCard}>
-                <Text style={styles.rightText}>IDR 20.000</Text>
-              </View>
-            </View>
-            <View style={styles.card}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-                }}
-              />
-              <View style={styles.wrapperMiddleCard}>
-                <Text style={styles.middleText}>Cold Brew</Text>
-                <Text style={styles.middleText}>1</Text>
-                <Text style={styles.middleText}>R</Text>
-              </View>
-              <View style={styles.wrapperRightCard}>
-                <Text style={styles.rightText}>IDR 20.000</Text>
-              </View>
-            </View>
-            <View style={styles.card}>
-              <Image
-                style={styles.image}
-                source={{
-                  uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-                }}
-              />
-              <View style={styles.wrapperMiddleCard}>
-                <Text style={styles.middleText}>Cold Brew</Text>
-                <Text style={styles.middleText}>1</Text>
-                <Text style={styles.middleText}>R</Text>
-              </View>
-              <View style={styles.wrapperRightCard}>
-                <Text style={styles.rightText}>IDR 20.000</Text>
-              </View>
-            </View>
+            ))}
           </ScrollView>
         </View>
         <View style={styles.wrapperSubtitle}>
@@ -92,9 +148,9 @@ export default class Delivery extends Component {
         <View style={styles.wrapperRadio}>
           <Radio.Group
             name="radio-button"
-            value={this.state.value}
+            value={this.state.payment_method}
             onChange={nextValue => {
-              this.setState({value: nextValue});
+              this.setState({payment_method: nextValue});
             }}>
             <Radio accessibilityLabel="test" colorScheme="gray" value="Card">
               <MaterialIcons
@@ -125,13 +181,34 @@ export default class Delivery extends Component {
             </Radio>
           </Radio.Group>
         </View>
-        <TouchableOpacity style={styles.button}>
+        {this.state.payment_method !== '' ? (
+          <TouchableOpacity onPress={this.alert} style={styles.button}>
+            <Text style={styles.buttonText}>Proceed payment</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Proceed payment</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={this.alert} style={styles.button}>
           <Text style={styles.buttonText}>Proceed payment</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  carts: state.carts,
+});
+
+const mapDispatchToProps = {
+  createTransaction,
+  deleteAllItems,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -180,6 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   wrapperMiddleCard: {
+    width: 90,
     marginLeft: 20,
     justifyContent: 'center',
   },
@@ -188,7 +266,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   wrapperRightCard: {
-    marginLeft: 30,
+    marginLeft: 20,
     justifyContent: 'center',
   },
   rightText: {

@@ -66,8 +66,39 @@ class Cart extends Component {
     }
   }
 
+  setDataUpdate = () => {
+    const item_id = [];
+    const item_amount = [];
+    const item_variant = [];
+    const item_additional_price = [];
+    this.props.carts.items.map(element => item_id.push(element.id));
+    this.props.carts.items.map(element => item_amount.push(element.amount));
+    this.props.carts.items.map(element => item_variant.push(element.variant));
+    this.props.carts.items.map(element =>
+      item_additional_price.push(element.additional_price),
+    );
+    this.setState({
+      item_id: item_id,
+      item_amount: item_amount,
+      item_variant: item_variant,
+      item_additional_price: item_additional_price,
+    });
+    const subTotal = this.props.carts.items
+      .map((element, idx) => element.end_price * element.amount)
+      .reduce((acc, curr) => acc + curr);
+    this.setState({
+      subTotal: subTotal,
+      total: subTotal + this.state.shipping + subTotal * (10 / 100),
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.carts !== this.props.carts) {
+      this.setDataUpdate();
+    }
+  }
+
   render() {
-    console.log(this.state);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -93,25 +124,29 @@ class Cart extends Component {
         <View style={styles.wrapperContent}>
           <Text style={styles.contentTextLeft}>Item Total</Text>
           <View style={styles.contentRight}>
-            <Text style={styles.contentTextRight}>IDR 40.000</Text>
+            <Text style={styles.contentTextRight}>
+              IDR {this.state.subTotal}
+            </Text>
           </View>
         </View>
         <View style={styles.wrapperContent}>
           <Text style={styles.contentTextLeft}>Delivery Charge</Text>
           <View style={styles.contentRight}>
-            <Text style={styles.contentTextRight}>IDR 0.000</Text>
+            <Text style={styles.contentTextRight}>
+              IDR {this.state.shipping}
+            </Text>
           </View>
         </View>
         <View style={styles.wrapperContent}>
           <Text style={styles.contentTextLeft}>Tax</Text>
           <View style={styles.contentRight}>
-            <Text style={styles.contentTextRight}>IDR 10.000</Text>
+            <Text style={styles.contentTextRight}>{this.state.tax}</Text>
           </View>
         </View>
         <View style={styles.wrapperTotal}>
           <Text style={styles.totalTextLeft}>Total</Text>
           <View style={styles.totalRight}>
-            <Text style={styles.totalTextRight}>IDR 10.000</Text>
+            <Text style={styles.totalTextRight}>IDR {this.state.total}</Text>
           </View>
         </View>
         <TouchableOpacity

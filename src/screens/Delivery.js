@@ -15,7 +15,7 @@ class Delivery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      delivery_method: false,
+      delivery_method: '',
       orders: [],
     };
   }
@@ -104,15 +104,22 @@ class Delivery extends Component {
             </Radio>
           </Radio.Group>
         </View>
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('Payment', {
-              orders: this.state.orders,
-            })
-          }
-          style={styles.button}>
-          <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
-        </TouchableOpacity>
+
+        {this.state.delivery_method !== '' ? (
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('Payment', {
+                orders: this.state.orders,
+              })
+            }
+            style={styles.button}>
+            <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
