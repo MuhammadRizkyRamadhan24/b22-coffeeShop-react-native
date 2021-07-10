@@ -1,22 +1,57 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import {Radio} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default class Delivery extends Component {
+import {connect} from 'react-redux';
+
+class Delivery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: false,
+      delivery_method: false,
+      orders: [],
     };
   }
+
+  setData = () => {
+    this.setState({
+      orders: this.props.route.params.orders,
+    });
+  };
+
+  setOrders = () => {
+    const delivery_method = this.state.delivery_method;
+    const data = {
+      ...this.state.orders,
+      delivery_method,
+    };
+    this.setState({
+      orders: data,
+    });
+  };
+
+  componentDidMount() {
+    this.setData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.delivery_method !== this.state.delivery_method) {
+      this.setOrders();
+    }
+  }
   render() {
-    console.log(this.state);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
           <View style={styles.buttonBack}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
             </TouchableOpacity>
           </View>
@@ -31,35 +66,50 @@ export default class Delivery extends Component {
           <Text style={styles.subtitle}>Address details</Text>
         </View>
         <View style={styles.wrapperAddress}>
-          <Text style={styles.textAddressBold}>Iskandar Street</Text>
-          <Text style={styles.textAddress}>
-            Km 5 refinery road oppsite re public road, effurun, Jakarta
-          </Text>
-          <Text style={styles.textAddress}>+62 81348287878</Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Text style={styles.textAddressBold}>Iskandar Street</Text>
+
+            <Text style={styles.textAddress}>
+              {this.props.user.data[0].address}
+            </Text>
+            <Text style={styles.textAddress}>
+              {this.props.user.data[0].phone_number}
+            </Text>
+          </ScrollView>
         </View>
         <View style={styles.wrapperSubtitle}>
           <Text style={styles.subtitle}>Delivery methods</Text>
         </View>
-        <View style={styles.wrapperAddress}>
+        <View style={styles.wrapperRadio}>
           <Radio.Group
             name="radio-button"
-            value={this.state.value}
+            value={this.state.delivery_method}
             onChange={nextValue => {
-              this.setState({value: nextValue});
+              this.setState({delivery_method: nextValue});
             }}>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="one">
+            <Radio
+              accessibilityLabel="test"
+              colorScheme="gray"
+              value="Door delivery">
               <Text style={styles.radio}>Door delivery</Text>
             </Radio>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="two">
+            <Radio
+              accessibilityLabel="test"
+              colorScheme="gray"
+              value="Pick up at store">
               <Text style={styles.radio}>Pick up at store</Text>
             </Radio>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="three">
+            <Radio accessibilityLabel="test" colorScheme="gray" value="Dine in">
               <Text style={styles.radio}>Dine in</Text>
             </Radio>
           </Radio.Group>
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Payment')}
+          onPress={() =>
+            this.props.navigation.navigate('Payment', {
+              orders: this.state.orders,
+            })
+          }
           style={styles.button}>
           <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
         </TouchableOpacity>
@@ -67,6 +117,13 @@ export default class Delivery extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Delivery);
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -107,6 +164,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   wrapperAddress: {
+    marginTop: 17,
+    backgroundColor: '#fff',
+    padding: 30,
+    borderRadius: 20,
+    width: 320,
+    height: 180,
+  },
+  wrapperRadio: {
     marginTop: 17,
     backgroundColor: '#fff',
     padding: 30,
