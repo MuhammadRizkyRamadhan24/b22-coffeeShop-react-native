@@ -18,12 +18,12 @@ export default class Delivery extends Component {
     };
   }
   render() {
-    console.log(this.state);
+    console.log(this.props.route.params.orders);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
           <View style={styles.buttonBack}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
             </TouchableOpacity>
           </View>

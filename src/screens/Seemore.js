@@ -42,7 +42,8 @@ class Seemore extends Component {
           <View style={styles.wrapper}>
             <View style={styles.wrapperNav}>
               <View style={styles.buttonBack}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}>
                   <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
                 </TouchableOpacity>
               </View>
