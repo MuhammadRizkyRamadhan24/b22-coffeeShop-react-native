@@ -6,75 +6,179 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
+import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {REACT_APP_BASE_URL} from '@env';
+import {connect} from 'react-redux';
+import {getDataById} from '../redux/actions/products';
+import {addItems} from '../redux/actions/carts';
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      click: false,
+      item: [],
+    };
+  }
+
+  getDataById = () => {
+    const id = this.props.route.params.id;
+    const {token} = this.props.auth;
+    this.props.getDataById(id, token).then(() => {
+      this.setState({
+        isLoading: false,
+      });
+    });
+  };
+
+  setItem = (variant, price) => {
+    const data = {
+      id: this.props.products.detailData.id,
+      name: this.props.products.detailData.name,
+      image: this.props.products.detailData.image,
+      variant: variant,
+      end_price: price,
+      additional_price: price - this.props.products.detailData.base_price,
+      amount: 1,
+    };
+    this.setState({
+      item: data,
+      click: true,
+    });
+  };
+
+  addItem = () => {
+    this.props.addItems(this.state.item);
+    // .then(() => {
+    ToastAndroid.showWithGravity(
+      'Success add to cart',
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+    );
+    // });
+  };
+
+  componentDidMount() {
+    this.getDataById();
+  }
+
   render() {
     return (
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.wrapperNav}>
-            <View style={styles.buttonBack}>
-              <TouchableOpacity>
-                <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
-              </TouchableOpacity>
+      <>
+        {this.state.isLoading !== true ? (
+          <ScrollView>
+            <View style={styles.wrapper}>
+              <View style={styles.wrapperNav}>
+                <View style={styles.buttonBack}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.goBack()}>
+                    <MaterialIcons
+                      name="arrow-back-ios"
+                      color="#000"
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  onPress={() => this.props.navigation.navigate('Cart')}
+                  style={styles.buttonCart}>
+                  <TouchableOpacity>
+                    <MaterialIcons
+                      name="shopping-cart"
+                      color="#000"
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.wrapperImage}>
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: `${REACT_APP_BASE_URL}/static/images/${this.props.products.detailData.image}`,
+                  }}
+                />
+                <View style={styles.wrapperVariant}>
+                  {this.props.products.detailData.variants.map((d, i) => (
+                    <TouchableOpacity
+                      onPress={() => this.setItem(d.variant, d.price)}
+                      key={d.id}
+                      style={styles.buttonVariant}>
+                      <Text style={styles.textVariant}>{d.variant}</Text>
+                    </TouchableOpacity>
+                  ))}
+                  {/* <TouchableOpacity style={styles.buttonVariant}>
+                    <Text style={styles.textVariant}>R</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.buttonVariant}>
+                    <Text style={styles.textVariant}>L</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.buttonVariant}>
+                    <Text style={styles.textVariant}>XL</Text>
+                  </TouchableOpacity> */}
+                </View>
+                <Text style={styles.textItem}>
+                  {this.props.products.detailData.name}
+                </Text>
+                <Text style={styles.textPrice}>
+                  IDR {this.props.products.detailData.base_price}
+                </Text>
+                <View style={styles.wrapperContent} />
+              </View>
+              <View style={styles.wrapperContent}>
+                <Text style={styles.subtitle}>Delivery info</Text>
+                <Text style={styles.description}>
+                  Delivered only : {this.props.products.detailData.delivery}
+                </Text>
+                <Text style={styles.subtitle}>Description</Text>
+                <Text style={styles.description}>
+                  {this.props.products.detailData.detail}
+                </Text>
+              </View>
+              {this.state.click === true && (
+                <TouchableOpacity
+                  onPress={this.addItem}
+                  style={styles.buttonBrown}>
+                  <Text style={styles.fontButton}>Add to cart</Text>
+                </TouchableOpacity>
+              )}
             </View>
-            <View style={styles.buttonCart}>
-              <TouchableOpacity>
-                <MaterialIcons name="shopping-cart" color="#000" size={30} />
-              </TouchableOpacity>
-            </View>
+          </ScrollView>
+        ) : (
+          <View style={styles.wrapperSpinner}>
+            <Spinner color="#000" />
           </View>
-          <View style={styles.wrapperImage}>
-            <Image
-              style={styles.image}
-              source={{
-                uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
-              }}
-            />
-            <View style={styles.wrapperVariant}>
-              <TouchableOpacity style={styles.buttonVariant}>
-                <Text style={styles.textVariant}>R</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonVariant}>
-                <Text style={styles.textVariant}>L</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonVariant}>
-                <Text style={styles.textVariant}>XL</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.textItem}>Cold Brew</Text>
-            <Text style={styles.textPrice}>IDR 20.000</Text>
-            <View style={styles.wrapperContent} />
-          </View>
-          <View style={styles.wrapperContent}>
-            <Text style={styles.subtitle}>Delivery info</Text>
-            <Text style={styles.description}>
-              Delivered only on monday until friday from 1 pm to 7 pm
-            </Text>
-            <Text style={styles.subtitle}>Description</Text>
-            <Text style={styles.description}>
-              Cold brewing is a method of brewing that combines ground coffee
-              and cool water and uses time instead of heat to extract the
-              flavor. It is brewed in small batches and steeped for as long as
-              48 hours.
-            </Text>
-          </View>
-          <TouchableOpacity style={styles.buttonBrown}>
-            <Text style={styles.fontButton}>Add to cart</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+        )}
+      </>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  products: state.products,
+  carts: state.carts,
+});
+
+const mapDispatchToProps = {getDataById, addItems};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#BCBABA',
     alignItems: 'center',
+  },
+  wrapperSpinner: {
+    flex: 1,
+    backgroundColor: '#BCBABA',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wrapperNav: {
     marginTop: 48,
