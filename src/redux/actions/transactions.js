@@ -41,6 +41,7 @@ export const createTransaction =
     item_amount,
     item_variant,
     item_additional_price,
+    delivery_method,
     payment_method,
     token,
   ) =>
@@ -53,6 +54,7 @@ export const createTransaction =
     item_additional_price.map(value =>
       form.append('item_additional_price', value),
     );
+    form.append('delivery_method', delivery_method);
     form.append('payment_method', payment_method);
     try {
       const {data} = await http(token).post(
