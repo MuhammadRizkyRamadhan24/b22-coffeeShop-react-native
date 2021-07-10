@@ -1,6 +1,6 @@
-# Mobile Library App (Coffee Shop)
+# Mobile App (Coffee Shop)
 
-An online library manager application created using React Native and Redux
+An online coffee shop manager application created using React Native and Redux
 
 ## Prerequisites
 - Node.js installed on the local machine
