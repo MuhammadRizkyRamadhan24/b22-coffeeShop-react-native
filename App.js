@@ -33,7 +33,6 @@ const drawer = () => {
       <Drawer.Screen name="Search" component={Search} />
       <Drawer.Screen name="EditProfile" component={EditProfile} />
       <Drawer.Screen name="Profile" component={Profile} />
-      {/* <Text>Test</Text> */}
     </Drawer.Navigator>
   );
 };
