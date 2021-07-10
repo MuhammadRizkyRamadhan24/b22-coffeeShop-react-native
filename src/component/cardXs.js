@@ -1,7 +1,68 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
+import {REACT_APP_BASE_URL} from '@env';
 
-const cardXs = () => {
+import {connect} from 'react-redux';
+import {setOrders} from '../redux/actions/carts';
+
+const cardXs = props => {
+  const data = props.data;
+
+  const plusOrder = orderData => {
+    let orders = props.carts.items;
+    let getIndex;
+    orders.map((order, index) => {
+      if (
+        order.additional_price === orderData.additional_price &&
+        order.amount === orderData.amount &&
+        order.end_price === orderData.end_price &&
+        order.id === orderData.id &&
+        order.image === orderData.image &&
+        order.name === orderData.name &&
+        order.variant === orderData.variant
+      ) {
+        getIndex = index;
+      }
+    });
+    orders[getIndex].amount += 1;
+    props.setOrders(orders);
+  };
+
+  const minusOrder = orderData => {
+    let orders = props.carts.items;
+    let getIndex;
+    orders.map((order, index) => {
+      if (
+        order.additional_price === orderData.additional_price &&
+        order.amount === orderData.amount &&
+        order.end_price === orderData.end_price &&
+        order.id === orderData.id &&
+        order.image === orderData.image &&
+        order.name === orderData.name &&
+        order.variant === orderData.variant
+      ) {
+        getIndex = index;
+      }
+    });
+    if (orders[getIndex].amount === 0) {
+      ToastAndroid.showWithGravity(
+        'cannot be less than 0',
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+      );
+    } else {
+      orders[getIndex].amount -= 1;
+    }
+
+    props.setOrders(orders);
+  };
   return (
     <View style={styles.card}>
       <View style={styles.cardLeft}>
@@ -9,20 +70,24 @@ const cardXs = () => {
           <Image
             style={styles.image}
             source={{
-              uri: 'https://images.unsplash.com/photo-1561047029-3000c68339ca?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y29mZmVlJTIwY3VwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80',
+              uri: `${REACT_APP_BASE_URL}/static/images/${data.image}`,
             }}
           />
-          <Text style={styles.textPrice}>IDR 20.000</Text>
+          <Text style={styles.textPrice}>IDR {data.end_price}</Text>
         </View>
       </View>
       <View style={styles.cardRight}>
-        <Text style={styles.textItem}>Cold Brew</Text>
+        <Text style={styles.textItem}>{data.name}</Text>
         <View style={styles.wrapperCounter}>
-          <TouchableOpacity style={styles.buttonCounter}>
+          <TouchableOpacity
+            onPress={() => minusOrder(data)}
+            style={styles.buttonCounter}>
             <Text style={styles.buttonTextCounter}>-</Text>
           </TouchableOpacity>
-          <Text style={styles.textCounter}>30</Text>
-          <TouchableOpacity style={styles.buttonCounter}>
+          <Text style={styles.textCounter}>{data.amount}</Text>
+          <TouchableOpacity
+            onPress={() => plusOrder(data)}
+            style={styles.buttonCounter}>
             <Text style={styles.buttonTextCounter}>+</Text>
           </TouchableOpacity>
         </View>
@@ -30,6 +95,16 @@ const cardXs = () => {
     </View>
   );
 };
+
+const mapStateToProps = state => ({
+  carts: state.carts,
+});
+
+const mapDispatchToProps = {
+  setOrders,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(cardXs);
 
 const styles = StyleSheet.create({
   card: {
@@ -96,5 +171,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
 });
-
-export default cardXs;

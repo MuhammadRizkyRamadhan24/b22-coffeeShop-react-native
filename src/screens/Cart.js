@@ -9,13 +9,70 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../component/cardXs';
 
-export default class Cart extends Component {
+import {connect} from 'react-redux';
+
+class Cart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item_id: [],
+      item_amount: [],
+      item_variant: [],
+      item_additional_price: [],
+      subTotal: 0,
+      tax: '10%',
+      shipping: 10000,
+      total: 0,
+    };
+  }
+
+  setData = () => {
+    const item_id = [];
+    const item_amount = [];
+    const item_variant = [];
+    const item_additional_price = [];
+    this.props.carts.items.map(element => item_id.push(element.id));
+    this.props.carts.items.map(element => item_amount.push(element.amount));
+    this.props.carts.items.map(element => item_variant.push(element.variant));
+    this.props.carts.items.map(element =>
+      item_additional_price.push(element.additional_price),
+    );
+    this.setState(
+      {
+        item_id: this.state.item_id.concat(item_id),
+        item_amount: this.state.item_amount.concat(item_amount),
+        item_variant: this.state.item_variant.concat(item_variant),
+        item_additional_price: this.state.item_additional_price.concat(
+          item_additional_price,
+        ),
+      },
+      () => {
+        const subTotal = this.props.carts.items
+          .map(
+            (element, idx) => element.end_price * this.state.item_amount[idx],
+          )
+          .reduce((acc, curr) => acc + curr);
+        this.setState({
+          subTotal: subTotal,
+          total: subTotal + this.state.shipping + subTotal * (10 / 100),
+        });
+      },
+    );
+  };
+
+  componentDidMount() {
+    if (this.props.carts.items.length > 0) {
+      this.setData();
+    }
+  }
+
   render() {
+    console.log(this.state);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
           <View style={styles.buttonBack}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
             </TouchableOpacity>
           </View>
@@ -25,8 +82,9 @@ export default class Cart extends Component {
         </View>
         <View style={styles.wrapperCard}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Card />
-            <Card />
+            {this.props.carts.items.map(d => (
+              <Card key={d.id} data={d} />
+            ))}
           </ScrollView>
         </View>
         <TouchableOpacity style={styles.button}>
@@ -57,7 +115,9 @@ export default class Cart extends Component {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Delivery')}
+          onPress={() =>
+            this.props.navigation.navigate('Delivery', {orders: this.state})
+          }
           style={styles.button}>
           <Text style={styles.buttonTextCheckout}>CHECKOUT</Text>
         </TouchableOpacity>
@@ -65,6 +125,14 @@ export default class Cart extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  products: state.products,
+  carts: state.carts,
+});
+
+export default connect(mapStateToProps)(Cart);
 
 const styles = StyleSheet.create({
   wrapper: {
