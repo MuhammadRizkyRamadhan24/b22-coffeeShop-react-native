@@ -21,7 +21,6 @@ const HeadDrawer = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-  console.log(loading, 'head');
   return (
     <View style={styles.wrapperProfile}>
       {loading === false ? (
