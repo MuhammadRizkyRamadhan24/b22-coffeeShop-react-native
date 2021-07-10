@@ -67,6 +67,7 @@ class ProductDetail extends Component {
   }
 
   render() {
+    console.log(this.props.navigation);
     return (
       <>
         {this.state.isLoading !== true ? (
@@ -83,10 +84,9 @@ class ProductDetail extends Component {
                     />
                   </TouchableOpacity>
                 </View>
-                <View
-                  onPress={() => this.props.navigation.navigate('Cart')}
-                  style={styles.buttonCart}>
-                  <TouchableOpacity>
+                <View style={styles.buttonCart}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Cart')}>
                     <MaterialIcons
                       name="shopping-cart"
                       color="#000"
