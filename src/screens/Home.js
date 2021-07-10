@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,9 +13,11 @@ import Card from '../component/cardLg';
 import Subtitle from '../component/subtitle';
 import Seemore from '../component/seemore';
 
+import {REACT_APP_BASE_URL} from '@env';
 import {connect} from 'react-redux';
 import {getDataByCategories} from '../redux/actions/products';
 import {getCategory} from '../redux/actions/categories';
+import {getUserById} from '../redux/actions/user';
 
 class Home extends Component {
   constructor(props) {
@@ -27,6 +30,7 @@ class Home extends Component {
       foods: [],
       addOn: [],
       isLoading: true,
+      loading: true,
     };
   }
 
@@ -65,21 +69,72 @@ class Home extends Component {
     });
   };
 
+  getUserData = () => {
+    const {token} = this.props.auth;
+    this.props.getUserById(token).then(() => {
+      this.setState({
+        loading: false,
+      });
+    });
+  };
+
   componentDidMount() {
+    this.getUserData();
     this.getProduct();
   }
 
   render() {
+    // console.log(this.props, this.state, 'home');
     return (
       <>
         {this.state.isLoading !== true ? (
           <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
             <View style={styles.wrapper}>
               <View style={styles.header}>
-                <TouchableOpacity
+                {this.state.loading !== true ? (
+                  this.props.user.data !== [] ? (
+                    <>
+                      {this.props.user.data[0].image === null ? (
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('Profile')
+                          }
+                          style={styles.marginIcon}>
+                          <Image
+                            style={styles.profile}
+                            source={{
+                              uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                            }}
+                          />
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('Profile')
+                          }
+                          style={styles.marginIcon}>
+                          <Image
+                            style={styles.profile}
+                            source={{
+                              uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate('Profile')}
+                      style={[styles.profile, styles.marginIcon]}
+                    />
+                  )
+                ) : (
+                  <></>
+                )}
+                {/* <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('Profile')}
                   style={[styles.profile, styles.marginIcon]}
-                />
+                /> */}
                 <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('Cart')}
                   style={styles.marginIcon}>
@@ -291,11 +346,12 @@ class Home extends Component {
 }
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user,
   products: state.products,
   categories: state.categories,
 });
 
-const mapDispatchToProps = {getDataByCategories, getCategory};
+const mapDispatchToProps = {getDataByCategories, getCategory, getUserById};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
