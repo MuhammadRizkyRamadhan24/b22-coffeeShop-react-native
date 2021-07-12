@@ -67,7 +67,6 @@ class ProductDetail extends Component {
   }
 
   render() {
-    console.log(this.props.navigation);
     return (
       <>
         {this.state.isLoading !== true ? (
