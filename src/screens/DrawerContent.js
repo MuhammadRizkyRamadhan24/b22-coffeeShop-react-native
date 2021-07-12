@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Head from '../component/headDrawer';
+import Signout from '../component/Signout';
 
 export function DrawerContent(props) {
   return (
@@ -72,10 +73,7 @@ export function DrawerContent(props) {
           }}
         />
       </View>
-      <TouchableOpacity style={styles.wrapperText}>
-        <Text style={styles.text}>Sign-out</Text>
-        <MaterialIcons name="arrow-right-alt" color="#6A4029" size={30} />
-      </TouchableOpacity>
+      <Signout />
     </View>
   );
 }
@@ -141,17 +139,5 @@ const styles = StyleSheet.create({
     color: '#6A4029',
     fontSize: 17,
     fontFamily: 'Poppins-SemiBold',
-  },
-  wrapperText: {
-    marginTop: 85,
-    marginLeft: -122,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 17,
-    color: '#6A4029',
   },
 });
