@@ -51,9 +51,9 @@ const cardXs = props => {
         getIndex = index;
       }
     });
-    if (orders[getIndex].amount === 0) {
+    if (orders[getIndex].amount === 1) {
       ToastAndroid.showWithGravity(
-        'cannot be less than 0',
+        'cannot be less than 1',
         ToastAndroid.LONG,
         ToastAndroid.TOP,
       );

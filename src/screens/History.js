@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default class History extends Component {
+import {connect} from 'react-redux';
+
+class History extends Component {
   render() {
     return (
       <View style={styles.wrapper}>
@@ -20,13 +22,19 @@ export default class History extends Component {
             </TouchableOpacity>
           </View>
           <View>
-            <Text style={styles.titleScreen}>My Coupons</Text>
+            <Text style={styles.titleScreen}>History</Text>
           </View>
         </View>
       </View>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(History);
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 92,
+    marginRight: 97,
   },
   titleScreen: {
     fontSize: 18,

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {Input, Radio} from 'native-base';
-// import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -19,32 +19,32 @@ class EditProfile extends Component {
     super(props);
     this.state = {
       value: '',
-      // isDatePickerVisible: false,
-      // date: '2001-01-01',
+      isDatePickerVisible: false,
+      date: '2001-01-01',
       pictureUri: '',
       picture: null,
     };
   }
-  // showDatePicker = () => {
-  //   this.setState({isDatePickerVisible: true});
-  // };
+  showDatePicker = () => {
+    this.setState({isDatePickerVisible: true});
+  };
 
-  // hideDatePicker = () => {
-  //   this.setState({isDatePickerVisible: false});
-  // };
+  hideDatePicker = () => {
+    this.setState({isDatePickerVisible: false});
+  };
 
-  // handleConfirm = dates => {
-  //   const parse = Date.parse(dates);
-  //   const newDate = new Date(parse);
-  //   const date = newDate.getDate();
-  //   const month = newDate.getMonth();
-  //   const year = newDate.getFullYear();
-  //   const final = `${year}-${month + 1}-${date}`;
-  //   this.setState({
-  //     date: final,
-  //   });
-  //   this.hideDatePicker();
-  // };
+  handleConfirm = dates => {
+    const parse = Date.parse(dates);
+    const newDate = new Date(parse);
+    const date = newDate.getDate();
+    const month = newDate.getMonth();
+    const year = newDate.getFullYear();
+    const final = `${year}-${month + 1}-${date}`;
+    this.setState({
+      date: final,
+    });
+    this.hideDatePicker();
+  };
 
   selectPicture = e => {
     if (!e.didCancel) {
@@ -141,7 +141,7 @@ class EditProfile extends Component {
               fontFamily="Poppins-Regular"
               placeholder="Enter your phone number"
             />
-            {/* <Text style={styles.label}>Date :</Text>
+            <Text style={styles.label}>Date :</Text>
             <View style={styles.wrapperDate}>
               <Text style={styles.date}>{this.state.date}</Text>
               <TouchableOpacity
@@ -155,7 +155,7 @@ class EditProfile extends Component {
                 onConfirm={this.handleConfirm}
                 onCancel={this.hideDatePicker}
               />
-            </View> */}
+            </View>
             <Text style={styles.label}>Delivery Address :</Text>
             <Input
               type="text"

@@ -138,23 +138,19 @@ class Home extends Component {
                 <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('Cart')}
                   style={styles.marginIcon}>
-                  <MaterialIcons
-                    name="shopping-cart"
-                    color="#8a8a8a"
-                    size={30}
-                  />
+                  <MaterialIcons name="shopping-cart" color="#000" size={30} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.marginIcon}>
                   <MaterialIcons
                     name="chat-bubble-outline"
-                    color="#8a8a8a"
+                    color="#000"
                     size={30}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.openDrawer()}
                   style={styles.marginIconMenu}>
-                  <MaterialIcons name="menu-open" color="#8a8a8a" size={40} />
+                  <MaterialIcons name="menu-open" color="#000" size={40} />
                 </TouchableOpacity>
               </View>
               <Text style={styles.title}>A good coffee is a good day</Text>
@@ -379,7 +375,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    backgroundColor: '#8a8a8a',
+    backgroundColor: '#000',
   },
   marginIcon: {
     marginHorizontal: 8,
