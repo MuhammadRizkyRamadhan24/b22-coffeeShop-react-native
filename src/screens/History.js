@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SwipeListView} from 'react-native-swipe-list-view';
 
 import {connect} from 'react-redux';
+import {getHistory, deleteTransaction} from '../redux/actions/transactions';
 
 class History extends Component {
   constructor(props) {
@@ -66,10 +68,41 @@ class History extends Component {
           delivery: 'COD',
         },
       ],
+      isLoading: true,
+      isUpdate: false,
     };
   }
 
+  getHistory = () => {
+    const {token} = this.props.auth;
+    this.props.getHistory(token).then(() => {
+      this.setState({
+        isLoading: false,
+      });
+    });
+  };
+
+  deleteTransaction = id => {
+    const {token} = this.props.auth;
+    this.props.deleteTransaction(token, id).then(() => {
+      this.setState({
+        isUpdate: !this.state.isUpdate,
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.getHistory();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isUpdate !== this.state.isUpdate) {
+      this.getHistory();
+    }
+  }
+
   render() {
+    console.log(this.props.transactions);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -90,32 +123,40 @@ class History extends Component {
           />
           <Text style={styles.textHint}>swipe on an item to delete</Text>
         </View>
-        <SwipeListView
-          style={styles.wrapperCard}
-          scrollEnabled={true}
-          showsVerticalScrollIndicator={false}
-          marginTop={20}
-          data={this.state.history}
-          renderItem={(data, rowMap) => (
-            <View style={styles.card}>
-              <Text style={styles.textCard}>{data.item.code}</Text>
-              <Text style={styles.textCard}>{data.item.total}</Text>
-              <Text style={styles.textCard}>{data.item.delivery}</Text>
-            </View>
-          )}
-          renderHiddenItem={(data, rowMap) => (
-            <View style={styles.behindCard}>
-              <TouchableOpacity style={styles.buttonBehindCard}>
-                <MaterialCommunityIcons
-                  name="trash-can-outline"
-                  color="#fff"
-                  size={20}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-          rightOpenValue={-75}
-        />
+        {this.state.isLoading === false ? (
+          <SwipeListView
+            style={styles.wrapperCard}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            marginTop={20}
+            data={this.props.transactions.data}
+            renderItem={(data, rowMap) => (
+              <View style={styles.card}>
+                <Text style={styles.textCard}>{data.item.code}</Text>
+                <Text style={styles.textCard}>{data.item.total}</Text>
+                <Text style={styles.textCard}>{data.item.delivery_method}</Text>
+              </View>
+            )}
+            renderHiddenItem={(data, rowMap) => (
+              <View style={styles.behindCard}>
+                <TouchableOpacity
+                  onPress={() => this.deleteTransaction(data.item.id)}
+                  style={styles.buttonBehindCard}>
+                  <MaterialCommunityIcons
+                    name="trash-can-outline"
+                    color="#fff"
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+            rightOpenValue={-75}
+          />
+        ) : (
+          <View style={styles.wrapperSpinner}>
+            <Spinner color="#000" />
+          </View>
+        )}
       </View>
     );
   }
@@ -123,9 +164,12 @@ class History extends Component {
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  transactions: state.transactions,
 });
 
-export default connect(mapStateToProps)(History);
+const mapDispatchToProps = {getHistory, deleteTransaction};
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -196,5 +240,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  wrapperSpinner: {
+    marginVertical: 50,
+    width: 315,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
