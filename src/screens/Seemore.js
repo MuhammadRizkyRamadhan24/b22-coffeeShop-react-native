@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../component/cardSm';
@@ -51,33 +45,27 @@ class Seemore extends Component {
                 <Text style={styles.titleScreen}>Favorite Products</Text>
               </View>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.wrapperCard}>
-                {/* <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card /> */}
-                {this.props.products.data.map(d => (
-                  <Card
-                    func={() =>
-                      this.props.navigation.navigate('ProductDetail', {
-                        id: d.id,
-                      })
-                    }
-                    key={d.id}
-                    name={d.name}
-                    price={d.price}
-                    image={d.image}
-                  />
-                ))}
-              </View>
-            </ScrollView>
+            <FlatList
+              scrollEnabled={true}
+              showsVerticalScrollIndicator={false}
+              style={styles.wrapperCard}
+              data={this.props.products.data}
+              numColumns={2}
+              renderItem={({item}) => (
+                <Card
+                  func={() =>
+                    this.props.navigation.navigate('ProductDetail', {
+                      id: item.id,
+                    })
+                  }
+                  key={item.id}
+                  name={item.name}
+                  price={item.price}
+                  image={item.image}
+                />
+              )}
+              keyExtractor={item => item.id}
+            />
           </View>
         ) : (
           <View style={styles.wrapperSpinner}>
@@ -125,7 +113,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   wrapperCard: {
-    marginTop: 50,
+    marginVertical: 50,
     width: 340,
     flex: 1,
     flexDirection: 'row',
