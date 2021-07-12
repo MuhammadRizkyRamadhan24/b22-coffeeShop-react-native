@@ -22,6 +22,7 @@ import Seemore from './src/screens/Seemore';
 import Payment from './src/screens/Payment';
 import Coupon from './src/screens/Coupon';
 import History from './src/screens/History';
+import {connect} from 'react-redux';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,7 +52,7 @@ const App = props => {
     <NavigationContainer>
       <NativeBaseProvider>
         <Stack.Navigator>
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Welcome"
             component={WelcomeScreen}
             options={{headerShown: false}}
@@ -75,8 +76,9 @@ const App = props => {
             name="ForgotPassword"
             component={ForgotPassword}
             options={{headerShown: false}}
-          />
-          <Stack.Screen
+          /> */}
+          {/* batas */}
+          {/* <Stack.Screen
             name="Drawer"
             component={drawer}
             options={{headerShown: false}}
@@ -115,11 +117,88 @@ const App = props => {
             name="History"
             component={History}
             options={{headerShown: false}}
-          />
+          /> */}
+
+          {props.auth.token === null ? (
+            <React.Fragment>
+              <Stack.Screen
+                name="Welcome"
+                component={WelcomeScreen}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="LoginSignup"
+                component={LoginSignup}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Signup"
+                component={Signup}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+                options={{headerShown: false}}
+              />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Stack.Screen
+                name="Drawer"
+                component={drawer}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Seemore"
+                component={Seemore}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ProductDetail"
+                component={ProductDetail}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Cart"
+                component={Cart}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Delivery"
+                component={Delivery}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Payment"
+                component={Payment}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Coupon"
+                component={Coupon}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="History"
+                component={History}
+                options={{headerShown: false}}
+              />
+            </React.Fragment>
+          )}
         </Stack.Navigator>
       </NativeBaseProvider>
     </NavigationContainer>
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, null)(App);
