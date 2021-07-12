@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ToastAndroid,
+} from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -12,62 +18,6 @@ class History extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [
-        {
-          id: 1,
-          code: 'CS/1272021/8942/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 2,
-          code: 'CS/1272021/8922/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 3,
-          code: 'CS/1272021/9842/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 4,
-          code: 'CS/1272021/8942/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 5,
-          code: 'CS/1272021/8922/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 6,
-          code: 'CS/1272021/9842/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 7,
-          code: 'CS/1272021/8942/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 8,
-          code: 'CS/1272021/8922/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-        {
-          id: 9,
-          code: 'CS/1272021/9842/11',
-          total: 'IDR 20000',
-          delivery: 'COD',
-        },
-      ],
       isLoading: true,
       isUpdate: false,
     };
@@ -79,6 +29,11 @@ class History extends Component {
       this.setState({
         isLoading: false,
       });
+      ToastAndroid.showWithGravity(
+        'Success delete history',
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+      );
     });
   };
 
@@ -133,7 +88,7 @@ class History extends Component {
             renderItem={(data, rowMap) => (
               <View style={styles.card}>
                 <Text style={styles.textCard}>{data.item.code}</Text>
-                <Text style={styles.textCard}>{data.item.total}</Text>
+                <Text style={styles.textCard}>IDR {data.item.total}</Text>
                 <Text style={styles.textCard}>{data.item.delivery_method}</Text>
               </View>
             )}
