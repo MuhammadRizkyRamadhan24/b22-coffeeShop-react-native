@@ -1,65 +1,105 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {REACT_APP_BASE_URL} from '@env';
 
-export default class Profile extends Component {
+import {connect} from 'react-redux';
+
+class Profile extends Component {
   render() {
+    console.log(this.props);
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.wrapperNav}>
-          <View style={styles.buttonBack}>
-            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-              <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
-            </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.wrapper}>
+          <View style={styles.wrapperNav}>
+            <View style={styles.buttonBack}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={styles.titleScreen}>My Profile</Text>
+            </View>
           </View>
-          <View>
-            <Text style={styles.titleScreen}>My Profile</Text>
+          <View style={styles.wrapperSubtitle}>
+            <Text style={styles.subtitle}>Your Information</Text>
+            <View style={styles.wrapperSubtitleRight}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('EditProfile')}>
+                <Text style={styles.subtitleRight}>Edit</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          <View style={styles.wrapperContent}>
+            <View>
+              {this.props.user.data[0].image === null && (
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                  }}
+                />
+              )}
+              {this.props.user.data[0].image !== null && (
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                  }}
+                />
+              )}
+            </View>
+            <View style={styles.contentRight}>
+              <Text style={styles.contentTextBold}>
+                {this.props.user.data[0].display_name}
+              </Text>
+              <Text style={styles.contentText}>
+                {this.props.user.data[0].email}
+              </Text>
+              <Text style={styles.contentText}>
+                {this.props.user.data[0].phone_number}
+              </Text>
+              <Text style={styles.contentText}>
+                {this.props.user.data[0].address}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('History')}
+            style={styles.buttonWhite}>
+            <Text style={styles.buttonTextWhite}>Order History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonWhite}>
+            <Text style={styles.buttonTextWhite}>Edit Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonWhite}>
+            <Text style={styles.buttonTextWhite}>FAQ</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonWhite}>
+            <Text style={styles.buttonTextWhite}>Help</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonBrown}>
+            <Text style={styles.buttonTextBrown}>Save Change</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.wrapperSubtitle}>
-          <Text style={styles.subtitle}>Your Information</Text>
-          <View style={styles.wrapperSubtitleRight}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('EditProfile')}>
-              <Text style={styles.subtitleRight}>Edit</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.wrapperContent}>
-          <View>
-            <Image
-              style={styles.image}
-              source={{
-                uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-              }}
-            />
-          </View>
-          <View style={styles.contentRight}>
-            <Text style={styles.contentTextBold}>User</Text>
-            <Text style={styles.contentText}>email@email.com</Text>
-            <Text style={styles.contentText}>0123456789</Text>
-            <Text style={styles.contentText}>address</Text>
-          </View>
-        </View>
-        <TouchableOpacity style={styles.buttonWhite}>
-          <Text style={styles.buttonTextWhite}>Order History</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonWhite}>
-          <Text style={styles.buttonTextWhite}>Edit Password</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonWhite}>
-          <Text style={styles.buttonTextWhite}>FAQ</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonWhite}>
-          <Text style={styles.buttonTextWhite}>Help</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonBrown}>
-          <Text style={styles.buttonTextBrown}>Save Change</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -133,9 +173,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   contentText: {
+    width: 200,
     marginTop: 5,
     fontFamily: 'Poppins-Regular',
-    fontSize: 18,
+    fontSize: 14,
     color: '#6A4029',
   },
   buttonWhite: {
@@ -152,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   buttonBrown: {
-    marginTop: 30,
+    marginVertical: 30,
     paddingHorizontal: 24,
     width: 320,
     height: 70,

@@ -99,6 +99,7 @@ class Cart extends Component {
   }
 
   render() {
+    console.log(this.props.carts.items.length);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -118,7 +119,9 @@ class Cart extends Component {
             ))}
           </ScrollView>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Coupon')}
+          style={styles.button}>
           <Text style={styles.buttonTextCoupon}>Apply Delivery Coupons</Text>
         </TouchableOpacity>
         <View style={styles.wrapperContent}>
@@ -149,13 +152,19 @@ class Cart extends Component {
             <Text style={styles.totalTextRight}>IDR {this.state.total}</Text>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('Delivery', {orders: this.state})
-          }
-          style={styles.button}>
-          <Text style={styles.buttonTextCheckout}>CHECKOUT</Text>
-        </TouchableOpacity>
+        {this.props.carts.items.length === 0 ? (
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonTextCheckout}>CHECKOUT</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('Delivery', {orders: this.state})
+            }
+            style={styles.button}>
+            <Text style={styles.buttonTextCheckout}>CHECKOUT</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }

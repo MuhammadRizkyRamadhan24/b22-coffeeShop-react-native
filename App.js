@@ -20,6 +20,8 @@ import Cart from './src/screens/Cart';
 import Delivery from './src/screens/Delivery';
 import Seemore from './src/screens/Seemore';
 import Payment from './src/screens/Payment';
+import Coupon from './src/screens/Coupon';
+import History from './src/screens/History';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -102,6 +104,16 @@ const App = props => {
           <Stack.Screen
             name="Payment"
             component={Payment}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Coupon"
+            component={Coupon}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="History"
+            component={History}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

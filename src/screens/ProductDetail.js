@@ -146,6 +146,11 @@ class ProductDetail extends Component {
                   <Text style={styles.fontButton}>Add to cart</Text>
                 </TouchableOpacity>
               )}
+              {this.state.click !== true && (
+                <TouchableOpacity style={styles.buttonBrown}>
+                  <Text style={styles.fontButton2}>Add to cart</Text>
+                </TouchableOpacity>
+              )}
             </View>
           </ScrollView>
         ) : (
@@ -258,5 +263,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Poppins-Bold',
     color: '#fff',
+  },
+  fontButton2: {
+    fontSize: 18,
+    fontFamily: 'Poppins-Bold',
+    color: '#6A4029',
   },
 });
