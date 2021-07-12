@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from '../component/cardLg';
-import Subtitle from '../component/subtitle';
-import Seemore from '../component/seemore';
+import Card from '../component/CardLg';
+import Subtitle from '../component/Subtitle';
+import Seemore from '../component/Seemore';
 
 import {REACT_APP_BASE_URL} from '@env';
 import {connect} from 'react-redux';

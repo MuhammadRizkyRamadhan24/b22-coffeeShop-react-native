@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from '../component/cardXs';
+import Card from '../component/CardXs';
 
 import {connect} from 'react-redux';
 

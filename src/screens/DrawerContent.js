@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Head from '../component/headDrawer';
+import Head from '../component/HeadDrawer';
 import Signout from '../component/Signout';
 
 export function DrawerContent(props) {

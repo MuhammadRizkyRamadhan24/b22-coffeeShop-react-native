@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {REACT_APP_BASE_URL} from '@env';
 
-const cardSm = props => {
+const CardSm = props => {
   return (
     <TouchableOpacity onPress={props.func}>
       <View style={styles.card}>
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default cardSm;
+export default CardSm;

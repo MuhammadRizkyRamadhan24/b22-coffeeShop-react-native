@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Input} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from '../component/cardSm';
+import Card from '../component/CardSm';
 import {connect} from 'react-redux';
 import {searchData} from '../redux/actions/products';
 

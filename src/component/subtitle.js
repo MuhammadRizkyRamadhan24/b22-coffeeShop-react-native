@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 
-const subtitle = props => {
+const Subtitle = props => {
   return <Text style={styles.text}>{props.title}</Text>;
 };
 
@@ -13,4 +13,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default subtitle;
+export default Subtitle;

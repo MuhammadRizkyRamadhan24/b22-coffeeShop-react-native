@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const seemore = props => {
+const Seemore = props => {
   return (
     <TouchableOpacity onPress={props.func}>
       <Text style={styles.text}>See more</Text>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default seemore;
+export default Seemore;

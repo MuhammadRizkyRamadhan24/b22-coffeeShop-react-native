@@ -13,7 +13,7 @@ import {REACT_APP_BASE_URL} from '@env';
 import {connect} from 'react-redux';
 import {setOrders} from '../redux/actions/carts';
 
-const cardXs = props => {
+const CardXs = props => {
   const data = props.data;
 
   const plusOrder = orderData => {
@@ -120,7 +120,7 @@ const mapDispatchToProps = {
   setOrders,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(cardXs);
+export default connect(mapStateToProps, mapDispatchToProps)(CardXs);
 
 const styles = StyleSheet.create({
   card: {

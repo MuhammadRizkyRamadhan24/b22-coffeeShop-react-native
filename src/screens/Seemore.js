@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Card from '../component/cardSm';
+import Card from '../component/CardSm';
 
 import {connect} from 'react-redux';
 import {getDataByCategories} from '../redux/actions/products';
