@@ -76,9 +76,8 @@ const App = props => {
             name="ForgotPassword"
             component={ForgotPassword}
             options={{headerShown: false}}
-          /> */}
-          {/* batas */}
-          {/* <Stack.Screen
+          />
+          <Stack.Screen
             name="Drawer"
             component={drawer}
             options={{headerShown: false}}
@@ -118,7 +117,6 @@ const App = props => {
             component={History}
             options={{headerShown: false}}
           /> */}
-
           {props.auth.token === null ? (
             <React.Fragment>
               <Stack.Screen
