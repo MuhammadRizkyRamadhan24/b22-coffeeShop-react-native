@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ToastAndroid,
+  Alert,
 } from 'react-native';
 import {REACT_APP_BASE_URL} from '@env';
 
@@ -52,17 +53,32 @@ const cardXs = props => {
       }
     });
     if (orders[getIndex].amount === 1) {
-      ToastAndroid.showWithGravity(
-        'cannot be less than 1',
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-      );
+      Alert.alert('Delete', 'Do you want to delete it?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => deleteOrders(orders, getIndex)},
+      ]);
     } else {
       orders[getIndex].amount -= 1;
+      props.setOrders(orders);
     }
-
-    props.setOrders(orders);
   };
+
+  const deleteOrders = (orders, getIndex) => {
+    ToastAndroid.showWithGravity(
+      'Success delete item',
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+    );
+    delete orders[getIndex];
+    var newArray = orders.filter(
+      value => Object.keys(value).length !== undefined,
+    );
+    props.setOrders(newArray);
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.cardLeft}>

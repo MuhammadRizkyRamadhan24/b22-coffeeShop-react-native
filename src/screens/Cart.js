@@ -67,29 +67,44 @@ class Cart extends Component {
   }
 
   setDataUpdate = () => {
-    const item_id = [];
-    const item_amount = [];
-    const item_variant = [];
-    const item_additional_price = [];
-    this.props.carts.items.map(element => item_id.push(element.id));
-    this.props.carts.items.map(element => item_amount.push(element.amount));
-    this.props.carts.items.map(element => item_variant.push(element.variant));
-    this.props.carts.items.map(element =>
-      item_additional_price.push(element.additional_price),
-    );
-    this.setState({
-      item_id: item_id,
-      item_amount: item_amount,
-      item_variant: item_variant,
-      item_additional_price: item_additional_price,
-    });
-    const subTotal = this.props.carts.items
-      .map((element, idx) => element.end_price * element.amount)
-      .reduce((acc, curr) => acc + curr);
-    this.setState({
-      subTotal: subTotal,
-      total: subTotal + this.state.shipping + subTotal * (10 / 100),
-    });
+    if (this.props.carts.items.length === 0) {
+      this.setState({
+        item_id: [],
+        item_amount: [],
+        item_variant: [],
+        item_additional_price: [],
+        subTotal: 0,
+        tax: '10%',
+        shipping: 10000,
+        total: 0,
+      });
+    }
+    if (this.props.carts.items.length > 0) {
+      const item_id = [];
+      const item_amount = [];
+      const item_variant = [];
+      const item_additional_price = [];
+      this.props.carts.items.map(element => item_id.push(element.id));
+      this.props.carts.items.map(element => item_amount.push(element.amount));
+      this.props.carts.items.map(element => item_variant.push(element.variant));
+      this.props.carts.items.map(element =>
+        item_additional_price.push(element.additional_price),
+      );
+      this.setState({
+        item_id: item_id,
+        item_amount: item_amount,
+        item_variant: item_variant,
+        item_additional_price: item_additional_price,
+      });
+      // console.log(this.props.carts.items, 'hehe');
+      const subTotal = this.props.carts.items
+        .map((element, idx) => element.end_price * element.amount)
+        .reduce((acc, curr) => acc + curr);
+      this.setState({
+        subTotal: subTotal,
+        total: subTotal + this.state.shipping + subTotal * (10 / 100),
+      });
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -99,7 +114,7 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(this.props.carts.items.length);
+    // console.log(this.props.carts.items);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
