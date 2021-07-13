@@ -24,6 +24,7 @@ import Coupon from './src/screens/Coupon';
 import History from './src/screens/History';
 import Promo from './src/screens/Promo';
 import {connect} from 'react-redux';
+import EditPassword from './src/screens/EditPassword';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -187,6 +188,11 @@ const App = props => {
               <Stack.Screen
                 name="History"
                 component={History}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="EditPassword"
+                component={EditPassword}
                 options={{headerShown: false}}
               />
             </React.Fragment>
