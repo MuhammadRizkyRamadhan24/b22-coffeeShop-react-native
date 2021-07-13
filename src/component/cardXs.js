@@ -138,6 +138,10 @@ const styles = StyleSheet.create({
     height: 135,
     marginTop: 25,
     borderRadius: 30,
+    shadowColor: '#000000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    elevation: 5,
   },
   image: {
     marginTop: -25,

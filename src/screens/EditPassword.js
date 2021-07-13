@@ -116,7 +116,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(EditPassword);
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#BCBABA',
+    backgroundColor: '#ECECEC',
     alignItems: 'center',
   },
   wrapperNav: {

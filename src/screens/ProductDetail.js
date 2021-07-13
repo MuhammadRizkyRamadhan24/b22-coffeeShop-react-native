@@ -158,7 +158,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#BCBABA',
+    backgroundColor: '#ECECEC',
     alignItems: 'center',
   },
   wrapperSpinner: {

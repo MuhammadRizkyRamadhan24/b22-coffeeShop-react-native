@@ -91,12 +91,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Seemore);
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#BCBABA',
+    backgroundColor: '#ECECEC',
     alignItems: 'center',
   },
   wrapperSpinner: {
     flex: 1,
-    backgroundColor: '#BCBABA',
+    backgroundColor: '#ECECEC',
     alignItems: 'center',
     justifyContent: 'center',
   },
