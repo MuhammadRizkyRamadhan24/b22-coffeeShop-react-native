@@ -188,54 +188,50 @@ class EditProfile extends Component {
     return (
       <>
         {this.state.isLoading === false ? (
-          <ScrollView>
-            <View style={styles.wrapper}>
-              <View style={styles.wrapperNav}>
-                <View style={styles.buttonBack}>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}>
-                    <MaterialIcons
-                      name="arrow-back-ios"
-                      color="#000"
-                      size={30}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <Text style={styles.titleScreen}>Edit Profile</Text>
-                </View>
+          <View style={styles.wrapper}>
+            <View style={styles.wrapperNav}>
+              <View style={styles.buttonBack}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}>
+                  <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => launchImageLibrary({}, this.selectPicture)}>
-                {this.props.user.data[0].image !== null && (
-                  <Image
-                    style={styles.image}
-                    source={
-                      this.state.pictureUri === ''
-                        ? {
-                            uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
-                          }
-                        : {
-                            uri: this.state.pictureUri,
-                          }
-                    }
-                  />
-                )}
-                {this.props.user.data[0].image === null && (
-                  <Image
-                    style={styles.image}
-                    source={
-                      this.state.pictureUri === ''
-                        ? {
-                            uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                          }
-                        : {
-                            uri: this.state.pictureUri,
-                          }
-                    }
-                  />
-                )}
-              </TouchableOpacity>
+              <View>
+                <Text style={styles.titleScreen}>Edit Profile</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => launchImageLibrary({}, this.selectPicture)}>
+              {this.props.user.data[0].image !== null && (
+                <Image
+                  style={styles.image}
+                  source={
+                    this.state.pictureUri === ''
+                      ? {
+                          uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                        }
+                      : {
+                          uri: this.state.pictureUri,
+                        }
+                  }
+                />
+              )}
+              {this.props.user.data[0].image === null && (
+                <Image
+                  style={styles.image}
+                  source={
+                    this.state.pictureUri === ''
+                      ? {
+                          uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                        }
+                      : {
+                          uri: this.state.pictureUri,
+                        }
+                  }
+                />
+              )}
+            </TouchableOpacity>
+            <ScrollView marginTop={25} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperInput}>
                 <Text style={styles.label}>Name :</Text>
                 <Input
@@ -331,8 +327,8 @@ class EditProfile extends Component {
                   <Text style={styles.buttonTextBrown}>Save and Update</Text>
                 </TouchableOpacity>
               </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         ) : (
           <View style={styles.wrapperSpinner}>
             <Spinner color="#000" />
@@ -424,7 +420,7 @@ const styles = StyleSheet.create({
     borderRadius: 130 / 2,
   },
   wrapperInput: {
-    marginTop: 25,
+    marginTop: 0,
     width: 320,
   },
   label: {

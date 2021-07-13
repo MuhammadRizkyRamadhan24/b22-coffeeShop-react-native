@@ -44,7 +44,6 @@ class Signup extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>

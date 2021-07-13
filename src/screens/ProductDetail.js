@@ -70,30 +70,22 @@ class ProductDetail extends Component {
     return (
       <>
         {this.state.isLoading !== true ? (
-          <ScrollView>
-            <View style={styles.wrapper}>
-              <View style={styles.wrapperNav}>
-                <View style={styles.buttonBack}>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.goBack()}>
-                    <MaterialIcons
-                      name="arrow-back-ios"
-                      color="#000"
-                      size={30}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.buttonCart}>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Cart')}>
-                    <MaterialIcons
-                      name="shopping-cart"
-                      color="#000"
-                      size={30}
-                    />
-                  </TouchableOpacity>
-                </View>
+          <View style={styles.wrapper}>
+            <View style={styles.wrapperNav}>
+              <View style={styles.buttonBack}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.goBack()}>
+                  <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
+                </TouchableOpacity>
               </View>
+              <View style={styles.buttonCart}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Cart')}>
+                  <MaterialIcons name="shopping-cart" color="#000" size={30} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <ScrollView marginTop={17} showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperImage}>
                 <Image
                   style={styles.image}
@@ -110,15 +102,6 @@ class ProductDetail extends Component {
                       <Text style={styles.textVariant}>{d.variant}</Text>
                     </TouchableOpacity>
                   ))}
-                  {/* <TouchableOpacity style={styles.buttonVariant}>
-                    <Text style={styles.textVariant}>R</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.buttonVariant}>
-                    <Text style={styles.textVariant}>L</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.buttonVariant}>
-                    <Text style={styles.textVariant}>XL</Text>
-                  </TouchableOpacity> */}
                 </View>
                 <Text style={styles.textItem}>
                   {this.props.products.detailData.name}
@@ -150,8 +133,8 @@ class ProductDetail extends Component {
                   <Text style={styles.fontButton2}>Add to cart</Text>
                 </TouchableOpacity>
               )}
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         ) : (
           <View style={styles.wrapperSpinner}>
             <Spinner color="#000" />
@@ -198,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
   },
   wrapperImage: {
-    marginTop: 17,
+    marginTop: 0,
     alignItems: 'center',
   },
   image: {

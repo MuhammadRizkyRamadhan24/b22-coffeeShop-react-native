@@ -88,71 +88,67 @@ class Home extends Component {
     return (
       <>
         {this.state.isLoading !== true ? (
-          <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-            <View style={styles.wrapper}>
-              <View style={styles.header}>
-                {this.state.loading !== true ? (
-                  this.props.user.data !== [] ? (
-                    <>
-                      {this.props.user.data[0].image === null ? (
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.props.navigation.navigate('Profile')
-                          }
-                          style={styles.marginIcon}>
-                          <Image
-                            style={styles.profile}
-                            source={{
-                              uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                            }}
-                          />
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.props.navigation.navigate('Profile')
-                          }
-                          style={styles.marginIcon}>
-                          <Image
-                            style={styles.profile}
-                            source={{
-                              uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      )}
-                    </>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => this.props.navigation.navigate('Profile')}
-                      style={[styles.profile, styles.marginIcon]}
-                    />
-                  )
+          <View style={styles.wrapper}>
+            <View style={styles.header}>
+              {this.state.loading !== true ? (
+                this.props.user.data !== [] ? (
+                  <>
+                    {this.props.user.data[0].image === null ? (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.props.navigation.navigate('Profile')
+                        }
+                        style={styles.marginIcon}>
+                        <Image
+                          style={styles.profile}
+                          source={{
+                            uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                          }}
+                        />
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.props.navigation.navigate('Profile')
+                        }
+                        style={styles.marginIcon}>
+                        <Image
+                          style={styles.profile}
+                          source={{
+                            uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                          }}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </>
                 ) : (
-                  <></>
-                )}
-                {/* <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Profile')}
-                  style={[styles.profile, styles.marginIcon]}
-                /> */}
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Cart')}
-                  style={styles.marginIcon}>
-                  <MaterialIcons name="shopping-cart" color="#000" size={30} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.marginIcon}>
-                  <MaterialIcons
-                    name="chat-bubble-outline"
-                    color="#000"
-                    size={30}
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Profile')}
+                    style={[styles.profile, styles.marginIcon]}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.openDrawer()}
-                  style={styles.marginIconMenu}>
-                  <MaterialIcons name="menu-open" color="#000" size={40} />
-                </TouchableOpacity>
-              </View>
+                )
+              ) : (
+                <></>
+              )}
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Cart')}
+                style={styles.marginIcon}>
+                <MaterialIcons name="shopping-cart" color="#000" size={30} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.marginIcon}>
+                <MaterialIcons
+                  name="chat-bubble-outline"
+                  color="#000"
+                  size={30}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.openDrawer()}
+                style={styles.marginIconMenu}>
+                <MaterialIcons name="menu-open" color="#000" size={40} />
+              </TouchableOpacity>
+            </View>
+            <ScrollView marginTop={10} showsVerticalScrollIndicator={false}>
               <Text style={styles.title}>A good coffee is a good day</Text>
               <View style={styles.wrapperCard}>
                 <View style={styles.wrapperSubtitle}>
@@ -344,8 +340,8 @@ class Home extends Component {
                   )}
                 </ScrollView>
               </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         ) : (
           <View style={styles.wrapperSpinner}>
             <Spinner color="#000" />
@@ -403,8 +399,8 @@ const styles = StyleSheet.create({
     color: '#000',
     width: 285,
     fontSize: 34,
-    marginLeft: -17.5,
-    marginTop: 40,
+    marginLeft: 37,
+    marginTop: 30,
   },
   subtitle: {
     width: 260,

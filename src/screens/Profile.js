@@ -15,18 +15,18 @@ import {connect} from 'react-redux';
 class Profile extends Component {
   render() {
     return (
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.wrapperNav}>
-            <View style={styles.buttonBack}>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text style={styles.titleScreen}>My Profile</Text>
-            </View>
+      <View style={styles.wrapper}>
+        <View style={styles.wrapperNav}>
+          <View style={styles.buttonBack}>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
+            </TouchableOpacity>
           </View>
+          <View>
+            <Text style={styles.titleScreen}>My Profile</Text>
+          </View>
+        </View>
+        <ScrollView marginTop={40} showsVerticalScrollIndicator={false}>
           <View style={styles.wrapperSubtitle}>
             <Text style={styles.subtitle}>Your Information</Text>
             <View style={styles.wrapperSubtitleRight}>
@@ -75,7 +75,9 @@ class Profile extends Component {
             style={styles.buttonWhite}>
             <Text style={styles.buttonTextWhite}>Order History</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonWhite}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('EditPassword')}
+            style={styles.buttonWhite}>
             <Text style={styles.buttonTextWhite}>Edit Password</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonWhite}>
@@ -87,8 +89,8 @@ class Profile extends Component {
           <TouchableOpacity style={styles.buttonBrown}>
             <Text style={styles.buttonTextBrown}>Save Change</Text>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
   wrapperSubtitle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 0,
     width: 320,
     height: 'auto',
   },
