@@ -87,6 +87,29 @@ class EditProfile extends Component {
     });
   };
 
+  getDataUserUpdate = () => {
+    const {token} = this.props.auth;
+    this.props.getUserById(token).then(() => {
+      const parse = Date.parse(this.props.user.data[0].date_birth);
+      const newDate = new Date(parse);
+      const date = newDate.getDate();
+      const month = newDate.getMonth();
+      const year = newDate.getFullYear();
+      const final = `${year}-${month + 1}-${date}`;
+      this.setState({
+        isLoading: false,
+        display_name: this.props.user.data[0].display_name,
+        gender: this.props.user.data[0].gender,
+        email: this.props.user.data[0].email,
+        phone_number: this.props.user.data[0].phone_number,
+        date_birth: final,
+        address: this.props.user.data[0].address,
+        pictureUri: '',
+        picture: null,
+      });
+    });
+  };
+
   test = () => {
     const {token} = this.props.auth;
     const {
@@ -157,7 +180,7 @@ class EditProfile extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.isUpdate !== this.state.isUpdate) {
-      this.getDataUser();
+      this.getDataUserUpdate();
     }
   }
 
