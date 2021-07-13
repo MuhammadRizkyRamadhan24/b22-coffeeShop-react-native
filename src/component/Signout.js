@@ -28,7 +28,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Signout);
 
 const styles = StyleSheet.create({
   wrapperText: {
-    marginTop: 85,
+    marginTop: 35,
     marginLeft: -122,
     flexDirection: 'row',
     justifyContent: 'center',

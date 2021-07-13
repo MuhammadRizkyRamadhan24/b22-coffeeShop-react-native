@@ -22,6 +22,7 @@ import Seemore from './src/screens/Seemore';
 import Payment from './src/screens/Payment';
 import Coupon from './src/screens/Coupon';
 import History from './src/screens/History';
+import Promo from './src/screens/Promo';
 import {connect} from 'react-redux';
 
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const drawer = () => {
       <Drawer.Screen name="Search" component={Search} />
       <Drawer.Screen name="EditProfile" component={EditProfile} />
       <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="Promo" component={Promo} />
     </Drawer.Navigator>
   );
 };

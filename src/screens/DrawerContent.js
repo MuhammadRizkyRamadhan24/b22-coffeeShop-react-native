@@ -52,6 +52,18 @@ export function DrawerContent(props) {
           style={styles.item}
           label={() => (
             <View style={styles.wrapperLabel}>
+              <MaterialIcons name="attach-money" color="#6A4029" size={30} />
+              <Text style={styles.label}>Promo</Text>
+            </View>
+          )}
+          onPress={() => {
+            props.navigation.navigate('Promo');
+          }}
+        />
+        <DrawerItem
+          style={styles.item}
+          label={() => (
+            <View style={styles.wrapperLabel}>
               <MaterialIcons name="notes" color="#6A4029" size={30} />
               <Text style={styles.label}>Privacy Policy</Text>
             </View>
