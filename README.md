@@ -5,7 +5,7 @@ An online coffee shop manager application created using React Native and Redux
 ## Prerequisites
 - Node.js installed on the local machine
 - MySQL intalled on the local machine (ex. XAMPP)
-<!-- - [Install API](https://github.com/MuhammadRizkyRamadhan24/LIBRARYAPP-API) -->
+- [Install API](https://github.com/MuhammadRizkyRamadhan24/b22-backend-beginner)
 
 ## Installation
 1. Clone this repository: `https://github.com/MuhammadRizkyRamadhan24/b22-coffeeShop-react-native`
