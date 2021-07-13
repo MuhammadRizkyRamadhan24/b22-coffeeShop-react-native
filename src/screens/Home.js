@@ -161,7 +161,10 @@ class Home extends Component {
                   </View>
                   <Seemore
                     func={() =>
-                      this.props.navigation.navigate('Seemore', {id: 1})
+                      this.props.navigation.navigate('Seemore', {
+                        id: 1,
+                        title: this.state.categories[0].name_category,
+                      })
                     }
                   />
                 </View>
@@ -201,7 +204,10 @@ class Home extends Component {
                   </View>
                   <Seemore
                     func={() =>
-                      this.props.navigation.navigate('Seemore', {id: 2})
+                      this.props.navigation.navigate('Seemore', {
+                        id: 2,
+                        title: this.state.categories[1].name_category,
+                      })
                     }
                   />
                 </View>
@@ -235,7 +241,10 @@ class Home extends Component {
                   </View>
                   <Seemore
                     func={() =>
-                      this.props.navigation.navigate('Seemore', {id: 3})
+                      this.props.navigation.navigate('Seemore', {
+                        id: 3,
+                        title: this.state.categories[2].name_category,
+                      })
                     }
                   />
                 </View>
@@ -269,7 +278,10 @@ class Home extends Component {
                   </View>
                   <Seemore
                     func={() =>
-                      this.props.navigation.navigate('Seemore', {id: 4})
+                      this.props.navigation.navigate('Seemore', {
+                        id: 4,
+                        title: this.state.categories[3].name_category,
+                      })
                     }
                   />
                 </View>
@@ -303,7 +315,10 @@ class Home extends Component {
                   </View>
                   <Seemore
                     func={() =>
-                      this.props.navigation.navigate('Seemore', {id: 5})
+                      this.props.navigation.navigate('Seemore', {
+                        id: 5,
+                        title: this.state.categories[4].name_category,
+                      })
                     }
                   />
                 </View>
@@ -378,10 +393,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   marginIcon: {
-    marginHorizontal: 8,
+    marginLeft: 8,
   },
   marginIconMenu: {
-    marginRight: 154,
+    marginRight: 170,
   },
   title: {
     fontFamily: 'Poppins-Bold',

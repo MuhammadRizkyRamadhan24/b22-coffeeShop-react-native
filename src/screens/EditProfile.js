@@ -6,23 +6,34 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  ToastAndroid,
+  Alert,
 } from 'react-native';
-import {Input, Radio} from 'native-base';
+import {Input, Radio, Spinner} from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {REACT_APP_BASE_URL} from '@env';
 
 import {connect} from 'react-redux';
+import {getUserById, changeUser} from '../redux/actions/user';
 
 class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      isLoading: true,
+      isUpdate: false,
       isDatePickerVisible: false,
       date: '2001-01-01',
       pictureUri: '',
       picture: null,
+      display_name: '',
+      gender: '',
+      email: '',
+      phone_number: '',
+      date_birth: '',
+      address: '',
     };
   }
   showDatePicker = () => {
@@ -41,137 +52,270 @@ class EditProfile extends Component {
     const year = newDate.getFullYear();
     const final = `${year}-${month + 1}-${date}`;
     this.setState({
-      date: final,
+      date_birth: final,
     });
     this.hideDatePicker();
   };
 
   selectPicture = e => {
     if (!e.didCancel) {
-      this.setState(
-        {
-          pictureUri: e.assets[0].uri,
-          picture: e.assets[0],
-        },
-        () => {
-          console.log(this.state.picture.type);
-        },
-      );
+      this.setState({
+        pictureUri: e.assets[0].uri,
+        picture: e.assets[0],
+      });
     }
   };
 
+  getDataUser = () => {
+    const {token} = this.props.auth;
+    this.props.getUserById(token).then(() => {
+      const parse = Date.parse(this.props.user.data[0].date_birth);
+      const newDate = new Date(parse);
+      const date = newDate.getDate();
+      const month = newDate.getMonth();
+      const year = newDate.getFullYear();
+      const final = `${year}-${month + 1}-${date}`;
+      this.setState({
+        isLoading: false,
+        display_name: this.props.user.data[0].display_name,
+        gender: this.props.user.data[0].gender,
+        email: this.props.user.data[0].email,
+        phone_number: this.props.user.data[0].phone_number,
+        date_birth: final,
+        address: this.props.user.data[0].address,
+      });
+    });
+  };
+
+  test = () => {
+    const {token} = this.props.auth;
+    const {
+      picture,
+      display_name,
+      gender,
+      email,
+      phone_number,
+      date_birth,
+      address,
+    } = this.state;
+    if (
+      this.state.picture === null ||
+      this.state.picture === undefined ||
+      this.state.picture === ''
+    ) {
+      const data = {
+        display_name,
+        gender,
+        email,
+        phone_number,
+        date_birth,
+        address,
+      };
+      Alert.alert('Update', 'Do you want to update it?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => this.updateData(token, data)},
+      ]);
+    } else {
+      const data = {
+        picture,
+        display_name,
+        gender,
+        email,
+        phone_number,
+        date_birth,
+        address,
+      };
+      Alert.alert('Update', 'Do you want to update it?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => this.updateData(token, data)},
+      ]);
+    }
+  };
+
+  updateData = (token, data) => {
+    this.props.changeUser(token, data).then(() => {
+      this.setState({
+        isUpdate: !this.state.isUpdate,
+      });
+      ToastAndroid.showWithGravity(
+        'Success update data',
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+      );
+    });
+  };
+
+  componentDidMount() {
+    this.getDataUser();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.isUpdate !== this.state.isUpdate) {
+      this.getDataUser();
+    }
+  }
+
   render() {
     return (
-      <ScrollView>
-        <View style={styles.wrapper}>
-          <View style={styles.wrapperNav}>
-            <View style={styles.buttonBack}>
-              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text style={styles.titleScreen}>Edit Profile</Text>
-            </View>
-          </View>
-          <TouchableOpacity
-            onPress={() => launchImageLibrary({}, this.selectPicture)}>
-            <Image
-              style={styles.image}
-              source={
-                this.state.pictureUri === ''
-                  ? {
-                      uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                    }
-                  : {
-                      uri: this.state.pictureUri,
-                    }
-              }
-            />
-          </TouchableOpacity>
-          <View style={styles.wrapperInput}>
-            <Text style={styles.label}>Name :</Text>
-            <Input
-              type="text"
-              variant="underlined"
-              color="#000"
-              borderColor="#000"
-              fontFamily="Poppins-Regular"
-              placeholder="Enter your name"
-            />
-            <View>
-              <Radio.Group
-                marginTop={5}
-                name="radio-button"
-                flexDirection="row"
-                value={this.state.delivery_method}
-                onChange={nextValue => {
-                  this.setState({value: nextValue});
-                }}>
-                <Radio
-                  marginRight={5}
-                  accessibilityLabel="test"
-                  colorScheme="gray"
-                  value="Male">
-                  <Text style={styles.radio}>Male</Text>
-                </Radio>
-                <Radio
-                  accessibilityLabel="test"
-                  colorScheme="gray"
-                  value="Female">
-                  <Text style={styles.radio}>Female</Text>
-                </Radio>
-              </Radio.Group>
-            </View>
-            <Text style={styles.label}>Email Address :</Text>
-            <Input
-              type="email"
-              variant="underlined"
-              color="#000"
-              borderColor="#000"
-              fontFamily="Poppins-Regular"
-              placeholder="Enter your email"
-            />
-            <Text style={styles.label}>Phone Number :</Text>
-            <Input
-              type="text"
-              variant="underlined"
-              color="#000"
-              borderColor="#000"
-              fontFamily="Poppins-Regular"
-              placeholder="Enter your phone number"
-            />
-            <Text style={styles.label}>Date :</Text>
-            <View style={styles.wrapperDate}>
-              <Text style={styles.date}>{this.state.date}</Text>
+      <>
+        {this.state.isLoading === false ? (
+          <ScrollView>
+            <View style={styles.wrapper}>
+              <View style={styles.wrapperNav}>
+                <View style={styles.buttonBack}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.goBack()}>
+                    <MaterialIcons
+                      name="arrow-back-ios"
+                      color="#000"
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <Text style={styles.titleScreen}>Edit Profile</Text>
+                </View>
+              </View>
               <TouchableOpacity
-                title="Show Date Picker"
-                onPress={this.showDatePicker}>
-                <MaterialIcons name="calendar-today" color="#000" size={30} />
+                onPress={() => launchImageLibrary({}, this.selectPicture)}>
+                {this.props.user.data[0].image !== null && (
+                  <Image
+                    style={styles.image}
+                    source={
+                      this.state.pictureUri === ''
+                        ? {
+                            uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                          }
+                        : {
+                            uri: this.state.pictureUri,
+                          }
+                    }
+                  />
+                )}
+                {this.props.user.data[0].image === null && (
+                  <Image
+                    style={styles.image}
+                    source={
+                      this.state.pictureUri === ''
+                        ? {
+                            uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                          }
+                        : {
+                            uri: this.state.pictureUri,
+                          }
+                    }
+                  />
+                )}
               </TouchableOpacity>
-              <DateTimePickerModal
-                isVisible={this.state.isDatePickerVisible}
-                mode="date"
-                onConfirm={this.handleConfirm}
-                onCancel={this.hideDatePicker}
-              />
+              <View style={styles.wrapperInput}>
+                <Text style={styles.label}>Name :</Text>
+                <Input
+                  value={this.state.display_name}
+                  onChangeText={val => this.setState({display_name: val})}
+                  type="text"
+                  variant="underlined"
+                  color="#000"
+                  borderColor="#000"
+                  fontFamily="Poppins-Regular"
+                  placeholder="Enter your name"
+                />
+                <View>
+                  <Radio.Group
+                    marginTop={5}
+                    name="radio-button"
+                    flexDirection="row"
+                    value={this.state.gender}
+                    onChange={nextValue => {
+                      this.setState({gender: nextValue});
+                    }}>
+                    <Radio
+                      marginRight={5}
+                      accessibilityLabel="test"
+                      colorScheme="gray"
+                      value="male">
+                      <Text style={styles.radio}>Male</Text>
+                    </Radio>
+                    <Radio
+                      accessibilityLabel="test"
+                      colorScheme="gray"
+                      value="female">
+                      <Text style={styles.radio}>Female</Text>
+                    </Radio>
+                  </Radio.Group>
+                </View>
+                <Text style={styles.label}>Email Address :</Text>
+                <Input
+                  value={this.state.email}
+                  onChangeText={val => this.setState({email: val})}
+                  type="email"
+                  variant="underlined"
+                  color="#000"
+                  borderColor="#000"
+                  fontFamily="Poppins-Regular"
+                  placeholder="Enter your email"
+                />
+                <Text style={styles.label}>Phone Number :</Text>
+                <Input
+                  value={this.state.phone_number}
+                  onChangeText={val => this.setState({phone_number: val})}
+                  type="text"
+                  variant="underlined"
+                  color="#000"
+                  borderColor="#000"
+                  fontFamily="Poppins-Regular"
+                  placeholder="Enter your phone number"
+                />
+                <Text style={styles.label}>Date :</Text>
+                <View style={styles.wrapperDate}>
+                  <Text style={styles.date}>{this.state.date_birth}</Text>
+                  <TouchableOpacity
+                    title="Show Date Picker"
+                    onPress={this.showDatePicker}>
+                    <MaterialIcons
+                      name="calendar-today"
+                      color="#000"
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                  <DateTimePickerModal
+                    isVisible={this.state.isDatePickerVisible}
+                    mode="date"
+                    onConfirm={this.handleConfirm}
+                    onCancel={this.hideDatePicker}
+                  />
+                </View>
+                <Text style={styles.label}>Delivery Address :</Text>
+                <Input
+                  value={this.state.address}
+                  onChangeText={val => this.setState({address: val})}
+                  type="text"
+                  variant="underlined"
+                  color="#000"
+                  borderColor="#000"
+                  marginBottom={30}
+                  fontFamily="Poppins-Regular"
+                  placeholder="Enter your address"
+                />
+                <TouchableOpacity
+                  onPress={this.test}
+                  style={styles.buttonBrown}>
+                  <Text style={styles.buttonTextBrown}>Save and Update</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <Text style={styles.label}>Delivery Address :</Text>
-            <Input
-              type="text"
-              variant="underlined"
-              color="#000"
-              borderColor="#000"
-              marginBottom={30}
-              fontFamily="Poppins-Regular"
-              placeholder="Enter your address"
-            />
-            <TouchableOpacity style={styles.buttonBrown}>
-              <Text style={styles.buttonTextBrown}>Save and Update</Text>
-            </TouchableOpacity>
+          </ScrollView>
+        ) : (
+          <View style={styles.wrapperSpinner}>
+            <Spinner color="#000" />
           </View>
-        </View>
-      </ScrollView>
+        )}
+      </>
     );
   }
 }
@@ -181,13 +325,21 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(EditProfile);
+const mapDispatchToProps = {getUserById, changeUser};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#BCBABA',
     alignItems: 'center',
+  },
+  wrapperSpinner: {
+    flex: 1,
+    backgroundColor: '#BCBABA',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   wrapperNav: {
     alignItems: 'center',

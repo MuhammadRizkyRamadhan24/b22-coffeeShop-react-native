@@ -29,11 +29,6 @@ class History extends Component {
       this.setState({
         isLoading: false,
       });
-      ToastAndroid.showWithGravity(
-        'Success delete history',
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-      );
     });
   };
 
@@ -43,6 +38,11 @@ class History extends Component {
       this.setState({
         isUpdate: !this.state.isUpdate,
       });
+      ToastAndroid.showWithGravity(
+        'Success delete history',
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+      );
     });
   };
 

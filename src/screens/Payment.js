@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 92,
+    marginRight: 90,
   },
   titleScreen: {
     fontSize: 18,

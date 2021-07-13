@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 92,
+    marginRight: 86,
   },
   titleScreen: {
     fontSize: 18,

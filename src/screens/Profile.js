@@ -14,7 +14,6 @@ import {connect} from 'react-redux';
 
 class Profile extends Component {
   render() {
-    console.log(this.props);
     return (
       <ScrollView>
         <View style={styles.wrapper}>
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 92,
+    marginRight: 84,
   },
   titleScreen: {
     fontSize: 18,

@@ -3,16 +3,20 @@ import {REACT_APP_BASE_URL} from '@env';
 
 export const changeUser = (token, Data) => async dispatch => {
   const form = new FormData();
-  if (Data.image !== undefined) {
-    form.append('image', Data.image[0]);
+  if (Data.picture !== undefined) {
+    form.append('image', {
+      uri: Data.picture.uri,
+      name: Data.picture.fileName,
+      type: Data.picture.type,
+    });
   }
+  form.append('display_name', Data.display_name);
+  form.append('gender', Data.gender);
   form.append('email', Data.email);
   form.append('phone_number', Data.phone_number);
+  form.append('date_birth', Data.date_birth);
   form.append('address', Data.address);
-  form.append('display_name', Data.display_name);
-  form.append('first_name', Data.first_name);
-  form.append('last_name', Data.last_name);
-  // console.log(form.get('image'))
+  console.log(form);
   try {
     const {data} = await http(token).put(
       `${REACT_APP_BASE_URL}/private/profile`,

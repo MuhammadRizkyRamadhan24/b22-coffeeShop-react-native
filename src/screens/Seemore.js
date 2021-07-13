@@ -42,7 +42,9 @@ class Seemore extends Component {
                 </TouchableOpacity>
               </View>
               <View>
-                <Text style={styles.titleScreen}>Favorite Products</Text>
+                <Text style={styles.titleScreen}>
+                  {this.props.route.params.title}
+                </Text>
               </View>
             </View>
             <FlatList
@@ -106,9 +108,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 50,
+    marginRight: 13,
   },
   titleScreen: {
+    marginTop: 4,
     fontSize: 18,
     fontFamily: 'Poppins-Bold',
   },

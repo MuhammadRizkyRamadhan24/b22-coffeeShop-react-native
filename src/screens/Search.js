@@ -87,13 +87,6 @@ class Search extends Component {
         },
       );
     }
-    // if (this.state.page === this.props.products.pageInfo.lastPage) {
-    //   ToastAndroid.showWithGravity(
-    //     'Data Maximum',
-    //     ToastAndroid.LONG,
-    //     ToastAndroid.CENTER,
-    //   );
-    // }
   };
 
   render() {
@@ -216,7 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonBack: {
-    marginRight: 50,
+    marginRight: 97,
   },
   titleScreen: {
     fontSize: 18,
