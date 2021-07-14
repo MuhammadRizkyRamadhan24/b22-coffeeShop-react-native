@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  ToastAndroid,
   Alert,
 } from 'react-native';
 import {Input, Radio, Spinner} from 'native-base';
@@ -14,6 +13,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {REACT_APP_BASE_URL} from '@env';
+import {showMessage} from 'react-native-flash-message';
 
 import {connect} from 'react-redux';
 import {getUserById, changeUser} from '../redux/actions/user';
@@ -166,11 +166,12 @@ class EditProfile extends Component {
       this.setState({
         isUpdate: !this.state.isUpdate,
       });
-      ToastAndroid.showWithGravity(
-        'Success update data',
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-      );
+      showMessage({
+        message: 'Success update data!',
+        type: 'success',
+        backgroundColor: '#6A4029',
+        color: '#fff',
+      });
     });
   };
 
@@ -201,7 +202,9 @@ class EditProfile extends Component {
               </View>
             </View>
             <TouchableOpacity
-              onPress={() => launchImageLibrary({}, this.selectPicture)}>
+              onPress={() =>
+                launchImageLibrary({quality: 0.5}, this.selectPicture)
+              }>
               {this.props.user.data[0].image !== null && (
                 <Image
                   style={styles.image}
@@ -278,6 +281,7 @@ class EditProfile extends Component {
                   borderColor="#000"
                   fontFamily="Poppins-Regular"
                   placeholder="Enter your email"
+                  keyboardType="email-address"
                 />
                 <Text style={styles.label}>Phone Number :</Text>
                 <Input
@@ -289,6 +293,7 @@ class EditProfile extends Component {
                   borderColor="#000"
                   fontFamily="Poppins-Regular"
                   placeholder="Enter your phone number"
+                  keyboardType="number-pad"
                 />
                 <Text style={styles.label}>Date :</Text>
                 <View style={styles.wrapperDate}>

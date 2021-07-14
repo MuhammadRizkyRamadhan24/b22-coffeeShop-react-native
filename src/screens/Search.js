@@ -5,9 +5,9 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  ToastAndroid,
 } from 'react-native';
 import {Input} from 'native-base';
+import {showMessage} from 'react-native-flash-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../component/CardSm';
 import {connect} from 'react-redux';
@@ -40,18 +40,20 @@ class Search extends Component {
     const page = this.state.page;
     this.props.searchData(search, page, token).then(() => {
       if (this.props.products.errMsg === 'Item not found') {
-        ToastAndroid.showWithGravity(
-          'Not Find Data',
-          ToastAndroid.LONG,
-          ToastAndroid.CENTER,
-        );
+        showMessage({
+          message: `${this.props.products.errMsg}`,
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
         this.setState({isLoading: false, spinnerLoading: false, items: []});
+      } else {
+        this.setState({
+          items: this.props.products.search,
+          isLoading: false,
+          spinnerLoading: false,
+        });
       }
-      this.setState({
-        items: this.props.products.search,
-        isLoading: false,
-        spinnerLoading: false,
-      });
     });
   };
 
@@ -144,19 +146,23 @@ class Search extends Component {
               style={styles.scrollView}
               showsVerticalScrollIndicator={false}>
               <View style={styles.wrapperCard}>
-                {this.state.items.map(d => (
-                  <Card
-                    func={() =>
-                      this.props.navigation.navigate('ProductDetail', {
-                        id: d.id,
-                      })
-                    }
-                    key={d.id}
-                    name={d.name}
-                    price={d.price}
-                    image={d.image}
-                  />
-                ))}
+                {this.state.items.length > 0 && (
+                  <>
+                    {this.state.items.map(d => (
+                      <Card
+                        func={() =>
+                          this.props.navigation.navigate('ProductDetail', {
+                            id: d.id,
+                          })
+                        }
+                        key={d.id}
+                        name={d.name}
+                        price={d.price}
+                        image={d.image}
+                      />
+                    ))}
+                  </>
+                )}
               </View>
             </ScrollView>
           ) : (

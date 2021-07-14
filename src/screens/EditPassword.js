@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ToastAndroid,
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Input} from 'native-base';
+import {showMessage} from 'react-native-flash-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {connect} from 'react-redux';
@@ -28,17 +22,19 @@ class EditPassword extends Component {
     const {oldPassword, newPassword} = this.state;
     this.props.changePassword(token, oldPassword, newPassword).then(() => {
       if (this.props.user.msg === 'Wrong Password') {
-        ToastAndroid.showWithGravity(
-          this.props.user.msg,
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        showMessage({
+          message: `${this.props.user.msg}!`,
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
       } else {
-        ToastAndroid.showWithGravity(
-          'Success change password',
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        showMessage({
+          message: 'Success edit password!',
+          type: 'success',
+          backgroundColor: '#6A4029',
+          color: '#fff',
+        });
         this.props.authLogout();
       }
     });

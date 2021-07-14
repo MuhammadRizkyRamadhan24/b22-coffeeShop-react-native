@@ -57,7 +57,6 @@ class History extends Component {
   }
 
   render() {
-    console.log(this.props.transactions);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -79,34 +78,45 @@ class History extends Component {
           <Text style={styles.textHint}>swipe on an item to delete</Text>
         </View>
         {this.state.isLoading === false ? (
-          <SwipeListView
-            style={styles.wrapperCard}
-            scrollEnabled={true}
-            showsVerticalScrollIndicator={false}
-            marginTop={20}
-            data={this.props.transactions.data}
-            renderItem={(data, rowMap) => (
-              <View style={styles.card}>
-                <Text style={styles.textCard}>{data.item.code}</Text>
-                <Text style={styles.textCard}>IDR {data.item.total}</Text>
-                <Text style={styles.textCard}>{data.item.delivery_method}</Text>
+          <>
+            {this.props.transactions.data.length > 0 ? (
+              <SwipeListView
+                style={styles.wrapperCard}
+                scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
+                marginTop={20}
+                data={this.props.transactions.data}
+                renderItem={(data, rowMap) => (
+                  <View style={styles.card}>
+                    <Text style={styles.textCard}>{data.item.code}</Text>
+                    <Text style={styles.textCard}>IDR {data.item.total}</Text>
+                    <Text style={styles.textCard}>
+                      {data.item.delivery_method}
+                    </Text>
+                  </View>
+                )}
+                renderHiddenItem={(data, rowMap) => (
+                  <View style={styles.behindCard}>
+                    <TouchableOpacity
+                      onPress={() => this.deleteTransaction(data.item.id)}
+                      style={styles.buttonBehindCard}>
+                      <MaterialCommunityIcons
+                        name="trash-can-outline"
+                        color="#fff"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                )}
+                rightOpenValue={-75}
+              />
+            ) : (
+              <View style={styles.wrapperNoCard}>
+                <MaterialIcons name="shopping-cart" color="#000" size={60} />
+                <Text style={styles.textNoCart}>Lets Buy Some Coffee!</Text>
               </View>
             )}
-            renderHiddenItem={(data, rowMap) => (
-              <View style={styles.behindCard}>
-                <TouchableOpacity
-                  onPress={() => this.deleteTransaction(data.item.id)}
-                  style={styles.buttonBehindCard}>
-                  <MaterialCommunityIcons
-                    name="trash-can-outline"
-                    color="#fff"
-                    size={20}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-            rightOpenValue={-75}
-          />
+          </>
         ) : (
           <View style={styles.wrapperSpinner}>
             <Spinner color="#000" />
@@ -202,5 +212,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  wrapperNoCard: {
+    marginTop: 250,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  textNoCart: {
+    marginTop: 10,
+    fontSize: 18,
+    fontFamily: 'Poppins-Bold',
   },
 });

@@ -5,10 +5,10 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  ToastAndroid,
 } from 'react-native';
 import {Input} from 'native-base';
 import background from '../../assets/login.png';
+import {showMessage} from 'react-native-flash-message';
 
 import {connect} from 'react-redux';
 import {authLogin} from '../redux/actions/auth';
@@ -26,18 +26,25 @@ class Login extends Component {
   login = () => {
     this.props.authLogin(this.state.email, this.state.password).then(() => {
       if (this.props.auth.errMsg === '') {
-        ToastAndroid.showWithGravity(
-          'Login success',
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        // ToastAndroid.showWithGravity(
+        //   'Login success',
+        //   ToastAndroid.LONG,
+        //   ToastAndroid.TOP,
+        // );
+        showMessage({
+          message: 'Login success!',
+          type: 'success',
+          backgroundColor: '#6A4029',
+          color: '#fff',
+        });
         return this.props.navigation.navigate('Drawer');
       } else {
-        ToastAndroid.showWithGravity(
-          `${this.props.auth.errMsg}`,
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        showMessage({
+          message: `${this.props.auth.errMsg}`,
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
       }
     });
   };
@@ -56,6 +63,7 @@ class Login extends Component {
               color="#fff"
               style={styles.input}
               placeholder="Enter your email"
+              keyboardType="email-address"
             />
             <Input
               value={this.state.password}
@@ -65,6 +73,7 @@ class Login extends Component {
               color="#fff"
               style={styles.input}
               placeholder="Enter your password"
+              keyboardType="ascii-capable"
             />
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('ForgotPassword')}>

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../component/CardXs';
 
@@ -25,6 +26,15 @@ class Cart extends Component {
       total: 0,
     };
   }
+
+  alertButton = () => {
+    showMessage({
+      message: 'No items in cart!',
+      type: 'danger',
+      backgroundColor: '#d63031',
+      color: '#fff',
+    });
+  };
 
   setData = () => {
     const item_id = [];
@@ -128,11 +138,18 @@ class Cart extends Component {
           </View>
         </View>
         <View style={styles.wrapperCard}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {this.props.carts.items.map(d => (
-              <Card key={d.id} data={d} />
-            ))}
-          </ScrollView>
+          {this.props.carts.items.length > 0 ? (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {this.props.carts.items.map(d => (
+                <Card key={d.id} data={d} />
+              ))}
+            </ScrollView>
+          ) : (
+            <View style={styles.wrapperNoCard}>
+              <MaterialIcons name="shopping-cart" color="#000" size={60} />
+              <Text style={styles.textNoCart}>Lets Buy Some Coffee!</Text>
+            </View>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Coupon')}
@@ -168,7 +185,7 @@ class Cart extends Component {
           </View>
         </View>
         {this.props.carts.items.length === 0 ? (
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={this.alertButton} style={styles.button}>
             <Text style={styles.buttonTextCheckout}>CHECKOUT</Text>
           </TouchableOpacity>
         ) : (
@@ -274,5 +291,16 @@ const styles = StyleSheet.create({
   totalTextRight: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
+  },
+  wrapperNoCard: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textNoCart: {
+    marginTop: 10,
+    fontSize: 18,
+    fontFamily: 'Poppins-Bold',
   },
 });

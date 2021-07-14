@@ -5,11 +5,10 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ToastAndroid,
   Alert,
 } from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {REACT_APP_BASE_URL} from '@env';
-
 import {connect} from 'react-redux';
 import {setOrders} from '../redux/actions/carts';
 
@@ -67,11 +66,12 @@ const CardXs = props => {
   };
 
   const deleteOrders = (orders, getIndex) => {
-    ToastAndroid.showWithGravity(
-      'Success delete item',
-      ToastAndroid.LONG,
-      ToastAndroid.TOP,
-    );
+    showMessage({
+      message: 'Success delete item!',
+      type: 'success',
+      backgroundColor: '#6A4029',
+      color: '#fff',
+    });
     delete orders[getIndex];
     var newArray = orders.filter(
       value => Object.keys(value).length !== undefined,

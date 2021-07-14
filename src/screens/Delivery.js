@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {Radio} from 'native-base';
+import {showMessage} from 'react-native-flash-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {connect} from 'react-redux';
@@ -34,6 +35,15 @@ class Delivery extends Component {
     };
     this.setState({
       orders: data,
+    });
+  };
+
+  alertButton = () => {
+    showMessage({
+      message: 'Please select delivery method!',
+      type: 'danger',
+      backgroundColor: '#d63031',
+      color: '#fff',
     });
   };
 
@@ -116,7 +126,7 @@ class Delivery extends Component {
             <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={this.alertButton} style={styles.button}>
             <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
           </TouchableOpacity>
         )}

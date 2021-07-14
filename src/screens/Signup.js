@@ -5,9 +5,9 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  ToastAndroid,
 } from 'react-native';
 import {Input} from 'native-base';
+import {showMessage} from 'react-native-flash-message';
 
 import background from '../../assets/signup.png';
 import {connect} from 'react-redux';
@@ -27,18 +27,20 @@ class Signup extends Component {
     const {email, password, phoneNumber} = this.state;
     this.props.authRegister(email, phoneNumber, password).then(() => {
       if (this.props.auth.errMsg === '') {
-        ToastAndroid.showWithGravity(
-          'Signup success',
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        showMessage({
+          message: 'Signup success!',
+          type: 'success',
+          backgroundColor: '#6A4029',
+          color: '#fff',
+        });
         return this.props.navigation.navigate('Login');
       } else {
-        ToastAndroid.showWithGravity(
-          `${this.props.auth.errMsg}`,
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        showMessage({
+          message: `${this.props.auth.errMsg}`,
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
       }
     });
   };
@@ -57,6 +59,7 @@ class Signup extends Component {
               color="#fff"
               style={styles.input}
               placeholder="Enter your email"
+              keyboardType="email-address"
             />
             <Input
               value={this.state.password}
@@ -66,6 +69,7 @@ class Signup extends Component {
               color="#fff"
               style={styles.input}
               placeholder="Enter your password"
+              keyboardType="ascii-capable"
             />
             <Input
               value={this.state.phoneNumber}
@@ -75,6 +79,7 @@ class Signup extends Component {
               color="#fff"
               style={styles.input}
               placeholder="Enter your phone number"
+              keyboardType="number-pad"
             />
             <TouchableOpacity
               onPress={this.register}

@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ToastAndroid,
 } from 'react-native';
 import {Spinner} from 'native-base';
+import {showMessage} from 'react-native-flash-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {REACT_APP_BASE_URL} from '@env';
 import {connect} from 'react-redux';
@@ -53,12 +53,18 @@ class ProductDetail extends Component {
 
   addItem = () => {
     this.props.addItems(this.state.item);
+    showMessage({
+      message: 'Success add to cart',
+      type: 'success',
+      backgroundColor: '#6A4029',
+      color: '#fff',
+    });
     // .then(() => {
-    ToastAndroid.showWithGravity(
-      'Success add to cart',
-      ToastAndroid.LONG,
-      ToastAndroid.TOP,
-    );
+    // ToastAndroid.showWithGravity(
+    //   'Success add to cart',
+    //   ToastAndroid.LONG,
+    //   ToastAndroid.TOP,
+    // );
     // });
   };
 

@@ -7,12 +7,11 @@ import {
   Image,
   ScrollView,
   Alert,
-  ToastAndroid,
 } from 'react-native';
 import {Radio} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {REACT_APP_BASE_URL} from '@env';
-
+import {showMessage} from 'react-native-flash-message';
 import {connect} from 'react-redux';
 import {createTransaction} from '../redux/actions/transactions';
 import {deleteAllItems} from '../redux/actions/carts';
@@ -74,21 +73,33 @@ class Payment extends Component {
         token,
       )
       .then(() => {
-        ToastAndroid.showWithGravity(
-          'Payment success',
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        // ToastAndroid.showWithGravity(
+        //   'Payment success',
+        //   ToastAndroid.LONG,
+        //   ToastAndroid.TOP,
+        // );
+        showMessage({
+          message: 'Payment success!',
+          type: 'success',
+          backgroundColor: '#6A4029',
+          color: '#fff',
+        });
         this.props.navigation.navigate('Home');
         return this.props.deleteAllItems();
       })
       .catch(err => {
         console.log(err);
-        ToastAndroid.showWithGravity(
-          'Something wrong',
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        // ToastAndroid.showWithGravity(
+        //   'Something wrong',
+        //   ToastAndroid.LONG,
+        //   ToastAndroid.TOP,
+        // );
+        showMessage({
+          message: 'Something wrong!',
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
       });
   };
 
@@ -102,9 +113,18 @@ class Payment extends Component {
     ]);
   };
 
+  alertButton = () => {
+    showMessage({
+      message: 'Please select payment method!',
+      type: 'danger',
+      backgroundColor: '#d63031',
+      color: '#fff',
+    });
+  };
+
   render() {
-    console.log(this.state);
-    console.log(this.props.route.params.orders);
+    // console.log(this.state);
+    // console.log(this.props.route.params.orders);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -186,13 +206,10 @@ class Payment extends Component {
             <Text style={styles.buttonText}>Proceed payment</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={this.alertButton} style={styles.button}>
             <Text style={styles.buttonText}>Proceed payment</Text>
           </TouchableOpacity>
         )}
-        <TouchableOpacity onPress={this.alert} style={styles.button}>
-          <Text style={styles.buttonText}>Proceed payment</Text>
-        </TouchableOpacity>
       </View>
     );
   }
