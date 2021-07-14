@@ -9,8 +9,8 @@ const auth = (state = initialState, action) => {
     case 'AUTH_LOGIN': {
       return {
         ...state,
-        token: action.payload.token,
-        errMsg: '',
+        token: action.payload.results.token,
+        msg: action.payload.message,
       };
     }
     case 'AUTH_LOGIN_FAILED': {
@@ -42,7 +42,6 @@ const auth = (state = initialState, action) => {
     case 'AUTH_RESET': {
       return {
         ...state,
-        token: null,
         errMsg: '',
         msg: '',
       };
