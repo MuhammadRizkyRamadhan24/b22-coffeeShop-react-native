@@ -25,6 +25,7 @@ import History from './src/screens/History';
 import Promo from './src/screens/Promo';
 import {connect} from 'react-redux';
 import EditPassword from './src/screens/EditPassword';
+import RNBootSplash from 'react-native-bootsplash';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,75 +52,13 @@ const styles = StyleSheet.create({
 });
 
 const App = props => {
+  React.useEffect(() => {
+    RNBootSplash.hide();
+  }, []);
   return (
     <NavigationContainer>
       <NativeBaseProvider>
         <Stack.Navigator>
-          {/* <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="LoginSignup"
-            component={LoginSignup}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ForgotPassword"
-            component={ForgotPassword}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Drawer"
-            component={drawer}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Seemore"
-            component={Seemore}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ProductDetail"
-            component={ProductDetail}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Cart"
-            component={Cart}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Delivery"
-            component={Delivery}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Payment"
-            component={Payment}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Coupon"
-            component={Coupon}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="History"
-            component={History}
-            options={{headerShown: false}}
-          /> */}
           {props.auth.token === null ? (
             <React.Fragment>
               <Stack.Screen
