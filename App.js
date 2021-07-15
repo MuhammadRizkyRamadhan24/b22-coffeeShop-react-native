@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 const App = props => {
   React.useEffect(() => {
-    RNBootSplash.hide();
+    RNBootSplash.hide({fade: true});
   }, []);
   return (
     <NavigationContainer>
