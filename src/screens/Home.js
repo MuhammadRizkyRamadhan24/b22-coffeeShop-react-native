@@ -37,6 +37,9 @@ class Home extends Component {
   getProduct = () => {
     const {token} = this.props.auth;
     this.props.getCategory(token).then(() => {
+      this.setState({
+        categories: this.props.categories.data,
+      });
       this.props.getDataByCategories(1, token).then(() => {
         this.setState({
           favoriteProduct: this.props.products.data,
@@ -56,15 +59,12 @@ class Home extends Component {
               this.props.getDataByCategories(5, token).then(() => {
                 this.setState({
                   addOn: this.props.products.data,
+                  isLoading: false,
                 });
               });
             });
           });
         });
-      });
-      this.setState({
-        categories: this.props.categories.data,
-        isLoading: false,
       });
     });
   };
