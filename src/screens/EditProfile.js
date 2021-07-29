@@ -166,12 +166,21 @@ class EditProfile extends Component {
       this.setState({
         isUpdate: !this.state.isUpdate,
       });
-      showMessage({
-        message: 'Success update data!',
-        type: 'success',
-        backgroundColor: '#6A4029',
-        color: '#fff',
-      });
+      if (this.props.user.msg === 'User updated successfully!') {
+        showMessage({
+          message: 'Success update data!',
+          type: 'success',
+          backgroundColor: '#6A4029',
+          color: '#fff',
+        });
+      } else {
+        showMessage({
+          message: `${this.props.user.msg}!`,
+          type: 'danger',
+          backgroundColor: '#d63031',
+          color: '#fff',
+        });
+      }
     });
   };
 
@@ -203,7 +212,7 @@ class EditProfile extends Component {
             </View>
             <TouchableOpacity
               onPress={() =>
-                launchImageLibrary({quality: 0.5}, this.selectPicture)
+                launchImageLibrary({quality: 1}, this.selectPicture)
               }>
               {this.props.user.data[0].image !== null && (
                 <Image
