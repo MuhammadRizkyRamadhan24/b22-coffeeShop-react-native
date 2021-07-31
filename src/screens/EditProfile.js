@@ -11,7 +11,7 @@ import {
 import {Input, Radio, Spinner} from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {REACT_APP_BASE_URL} from '@env';
 import {showMessage} from 'react-native-flash-message';
 
@@ -64,6 +64,23 @@ class EditProfile extends Component {
         picture: e.assets[0],
       });
     }
+  };
+
+  setPicture = () => {
+    Alert.alert('Select Picture', 'Please select picture', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Gallery',
+        onPress: () => launchImageLibrary({quality: 1}, this.selectPicture),
+      },
+      {
+        text: 'Camera',
+        onPress: () => launchCamera({quality: 1}, this.selectPicture),
+      },
+    ]);
   };
 
   getDataUser = () => {
@@ -210,10 +227,7 @@ class EditProfile extends Component {
                 <Text style={styles.titleScreen}>Edit Profile</Text>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={() =>
-                launchImageLibrary({quality: 1}, this.selectPicture)
-              }>
+            <TouchableOpacity onPress={this.setPicture}>
               {this.props.user.data[0].image !== null && (
                 <Image
                   style={styles.image}

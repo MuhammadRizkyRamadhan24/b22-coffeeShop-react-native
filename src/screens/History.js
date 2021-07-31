@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  ToastAndroid,
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SwipeListView} from 'react-native-swipe-list-view';
-
+import {showMessage} from 'react-native-flash-message';
 import {connect} from 'react-redux';
 import {getHistory, deleteTransaction} from '../redux/actions/transactions';
 
@@ -38,11 +32,12 @@ class History extends Component {
       this.setState({
         isUpdate: !this.state.isUpdate,
       });
-      ToastAndroid.showWithGravity(
-        'Success delete history',
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-      );
+      showMessage({
+        message: 'Success delete history!',
+        type: 'success',
+        backgroundColor: '#6A4029',
+        color: '#fff',
+      });
     });
   };
 

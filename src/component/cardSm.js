@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 120,
     fontFamily: 'Poppins-Bold',
-    fontSize: 17,
+    fontSize: 15,
     marginTop: 15,
   },
   cardPriceText: {
     color: '#6A4029',
     fontFamily: 'Poppins-Bold',
-    fontSize: 17,
+    fontSize: 15,
     marginVertical: 10,
   },
 });

@@ -18,10 +18,10 @@ export const getDataByCategories = (id, token) => async dispatch => {
   }
 };
 
-export const searchData = (search, page, token) => async dispatch => {
+export const searchData = (search, page, order, token) => async dispatch => {
   try {
     const {data} = await http(token).get(
-      `${REACT_APP_BASE_URL}/items?search=${search}&limit=6&order=name&sort=asc&page=${page}`,
+      `${REACT_APP_BASE_URL}/items?search=${search}&limit=6&order=${order}&sort=asc&page=${page}`,
     );
     dispatch({
       type: 'SEARCH',
