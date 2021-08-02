@@ -33,6 +33,7 @@ class Cart extends Component {
       type: 'danger',
       backgroundColor: '#d63031',
       color: '#fff',
+      duration: 4000,
     });
   };
 
@@ -141,7 +142,7 @@ class Cart extends Component {
           {this.props.carts.items.length > 0 ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               {this.props.carts.items.map(d => (
-                <Card key={d.id} data={d} />
+                <Card key={`${d.id}${d.end_price}`} data={d} />
               ))}
             </ScrollView>
           ) : (
@@ -160,7 +161,7 @@ class Cart extends Component {
           <Text style={styles.contentTextLeft}>Item Total</Text>
           <View style={styles.contentRight}>
             <Text style={styles.contentTextRight}>
-              IDR {this.state.subTotal}
+              IDR {Number(this.state.subTotal).toLocaleString('en')}
             </Text>
           </View>
         </View>
@@ -168,7 +169,7 @@ class Cart extends Component {
           <Text style={styles.contentTextLeft}>Delivery Charge</Text>
           <View style={styles.contentRight}>
             <Text style={styles.contentTextRight}>
-              IDR {this.state.shipping}
+              IDR {Number(this.state.shipping).toLocaleString('en')}
             </Text>
           </View>
         </View>
@@ -181,7 +182,9 @@ class Cart extends Component {
         <View style={styles.wrapperTotal}>
           <Text style={styles.totalTextLeft}>Total</Text>
           <View style={styles.totalRight}>
-            <Text style={styles.totalTextRight}>IDR {this.state.total}</Text>
+            <Text style={styles.totalTextRight}>
+              IDR {Number(this.state.total).toLocaleString('en')}
+            </Text>
           </View>
         </View>
         {this.props.carts.items.length === 0 ? (

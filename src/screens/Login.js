@@ -36,6 +36,7 @@ class Login extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
+          duration: 5000,
         });
         return this.props.navigation.navigate('Drawer');
       } else {
@@ -44,6 +45,7 @@ class Login extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
+          duration: 5000,
         });
       }
     });

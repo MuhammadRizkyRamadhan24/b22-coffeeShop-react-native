@@ -37,6 +37,7 @@ class History extends Component {
         type: 'success',
         backgroundColor: '#6A4029',
         color: '#fff',
+        duration: 4000,
       });
     });
   };
@@ -84,7 +85,9 @@ class History extends Component {
                 renderItem={(data, rowMap) => (
                   <View style={styles.card}>
                     <Text style={styles.textCard}>{data.item.code}</Text>
-                    <Text style={styles.textCard}>IDR {data.item.total}</Text>
+                    <Text style={styles.textCard}>
+                      IDR {Number(data.item.total).toLocaleString('en')}
+                    </Text>
                     <Text style={styles.textCard}>
                       {data.item.delivery_method}
                     </Text>

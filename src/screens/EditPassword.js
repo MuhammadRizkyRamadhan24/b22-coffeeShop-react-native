@@ -27,6 +27,7 @@ class EditPassword extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
+          duration: 4000,
         });
       } else {
         showMessage({
@@ -34,6 +35,7 @@ class EditPassword extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
+          duration: 4000,
         });
         this.props.authLogout();
       }

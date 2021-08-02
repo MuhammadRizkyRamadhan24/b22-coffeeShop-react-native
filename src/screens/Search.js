@@ -50,6 +50,7 @@ class Search extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
+          duration: 4000,
         });
         this.setState({isLoading: false, spinnerLoading: false, items: []});
       } else {

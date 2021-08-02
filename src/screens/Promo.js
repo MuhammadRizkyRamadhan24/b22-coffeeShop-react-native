@@ -95,11 +95,13 @@ export default class Promo extends Component {
                     }}
                   />
                   <Text style={styles.cardDiscountPriceText}>
-                    IDR {item.promo_price}
+                    IDR {Number(item.promo_price).toLocaleString('en')}
                   </Text>
                   <Text style={styles.cardItemText}>{item.name}</Text>
 
-                  <Text style={styles.cardPriceText}>IDR {item.price}</Text>
+                  <Text style={styles.cardPriceText}>
+                    IDR {Number(item.price).toLocaleString('en')}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>

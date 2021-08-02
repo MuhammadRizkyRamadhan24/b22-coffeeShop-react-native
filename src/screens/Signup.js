@@ -32,6 +32,7 @@ class Signup extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
+          duration: 4000,
         });
         return this.props.navigation.navigate('Login');
       } else {
@@ -40,6 +41,7 @@ class Signup extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
+          duration: 4000,
         });
       }
     });

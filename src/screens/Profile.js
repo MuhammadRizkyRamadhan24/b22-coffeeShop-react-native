@@ -86,9 +86,9 @@ class Profile extends Component {
           <TouchableOpacity style={styles.buttonWhite}>
             <Text style={styles.buttonTextWhite}>Help</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonBrown}>
+          {/* <TouchableOpacity style={styles.buttonBrown}>
             <Text style={styles.buttonTextBrown}>Save Change</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
       </View>
     );

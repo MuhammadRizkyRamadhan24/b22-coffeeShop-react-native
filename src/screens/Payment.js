@@ -83,6 +83,7 @@ class Payment extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
+          duration: 4000,
         });
         this.props.navigation.navigate('Home');
         return this.props.deleteAllItems();
@@ -99,6 +100,7 @@ class Payment extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
+          duration: 4000,
         });
       });
   };
@@ -119,6 +121,7 @@ class Payment extends Component {
       type: 'danger',
       backgroundColor: '#d63031',
       color: '#fff',
+      duration: 4000,
     });
   };
 
@@ -156,7 +159,9 @@ class Payment extends Component {
                   <Text style={styles.middleText}>{d.variant}</Text>
                 </View>
                 <View style={styles.wrapperRightCard}>
-                  <Text style={styles.rightText}>IDR {d.end_price}</Text>
+                  <Text style={styles.rightText}>
+                    IDR {Number(d.end_price).toLocaleString('en')}
+                  </Text>
                 </View>
               </View>
             ))}
@@ -283,7 +288,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   wrapperRightCard: {
-    marginLeft: 20,
+    marginLeft: 10,
     justifyContent: 'center',
   },
   rightText: {

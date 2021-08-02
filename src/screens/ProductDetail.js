@@ -58,6 +58,7 @@ class ProductDetail extends Component {
       type: 'success',
       backgroundColor: '#6A4029',
       color: '#fff',
+      duration: 4000,
     });
     // .then(() => {
     // ToastAndroid.showWithGravity(
@@ -113,7 +114,10 @@ class ProductDetail extends Component {
                   {this.props.products.detailData.name}
                 </Text>
                 <Text style={styles.textPrice}>
-                  IDR {this.props.products.detailData.base_price}
+                  IDR{' '}
+                  {Number(
+                    this.props.products.detailData.base_price,
+                  ).toLocaleString('en')}
                 </Text>
                 <View style={styles.wrapperContent} />
               </View>

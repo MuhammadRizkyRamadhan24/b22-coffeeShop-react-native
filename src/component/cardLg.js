@@ -14,7 +14,9 @@ const CardLg = props => {
             }}
           />
           <Text style={styles.itemName}>{props.name}</Text>
-          <Text style={styles.itemPrice}>IDR {props.price}</Text>
+          <Text style={styles.itemPrice}>
+            IDR {Number(props.price).toLocaleString('en')}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

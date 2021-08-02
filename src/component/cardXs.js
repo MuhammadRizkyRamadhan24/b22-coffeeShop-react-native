@@ -71,6 +71,7 @@ const CardXs = props => {
       type: 'success',
       backgroundColor: '#6A4029',
       color: '#fff',
+      duration: 4000,
     });
     delete orders[getIndex];
     var newArray = orders.filter(
@@ -89,7 +90,9 @@ const CardXs = props => {
               uri: `${REACT_APP_BASE_URL}/static/images/${data.image}`,
             }}
           />
-          <Text style={styles.textPrice}>IDR {data.end_price}</Text>
+          <Text style={styles.textPrice}>
+            IDR {Number(data.end_price).toLocaleString('en')}
+          </Text>
         </View>
       </View>
       <View style={styles.cardRight}>

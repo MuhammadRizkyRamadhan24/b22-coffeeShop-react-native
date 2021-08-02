@@ -14,7 +14,9 @@ const CardSm = props => {
             }}
           />
           <Text style={styles.cardItemText}>{props.name}</Text>
-          <Text style={styles.cardPriceText}>IDR {props.price}</Text>
+          <Text style={styles.cardPriceText}>
+            IDR {Number(props.price).toLocaleString('en')}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

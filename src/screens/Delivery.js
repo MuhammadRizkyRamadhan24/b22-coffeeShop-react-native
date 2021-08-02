@@ -44,6 +44,7 @@ class Delivery extends Component {
       type: 'danger',
       backgroundColor: '#d63031',
       color: '#fff',
+      duration: 4000,
     });
   };
 
