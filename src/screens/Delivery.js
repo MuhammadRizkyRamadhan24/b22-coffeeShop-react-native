@@ -39,13 +39,22 @@ class Delivery extends Component {
   };
 
   alertButton = () => {
-    showMessage({
-      message: 'Please select delivery method!',
-      type: 'danger',
-      backgroundColor: '#d63031',
-      color: '#fff',
-      duration: 4000,
-    });
+    if (this.props.user.data[0].address === null) {
+      showMessage({
+        message: 'Address cannot be empty!',
+        type: 'danger',
+        backgroundColor: '#d63031',
+        color: '#fff',
+      });
+    }
+    if (this.state.delivery_method === '') {
+      showMessage({
+        message: 'Please select delivery method!',
+        type: 'danger',
+        backgroundColor: '#d63031',
+        color: '#fff',
+      });
+    }
   };
 
   componentDidMount() {
@@ -116,7 +125,8 @@ class Delivery extends Component {
           </Radio.Group>
         </View>
 
-        {this.state.delivery_method !== '' ? (
+        {this.state.delivery_method !== '' &&
+        this.props.user.data[0].address !== null ? (
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate('Payment', {

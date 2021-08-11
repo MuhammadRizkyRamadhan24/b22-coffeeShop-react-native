@@ -9,6 +9,8 @@ import {
 import {Input} from 'native-base';
 import background from '../../assets/login.png';
 import {showMessage} from 'react-native-flash-message';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
 import {connect} from 'react-redux';
 import {authLogin} from '../redux/actions/auth';
@@ -17,14 +19,42 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      // email: '',
+      // password: '',
       isLoading: true,
     };
   }
 
-  login = () => {
-    this.props.authLogin(this.state.email, this.state.password).then(() => {
+  // login = () => {
+  //   this.props.authLogin(this.state.email, this.state.password).then(() => {
+  //     if (this.props.auth.errMsg === '') {
+  //       // ToastAndroid.showWithGravity(
+  //       //   'Login success',
+  //       //   ToastAndroid.LONG,
+  //       //   ToastAndroid.TOP,
+  //       // );
+  //       showMessage({
+  //         message: 'Login success!',
+  //         type: 'success',
+  //         backgroundColor: '#6A4029',
+  //         color: '#fff',
+  //         duration: 5000,
+  //       });
+  //       return this.props.navigation.navigate('Drawer');
+  //     } else {
+  //       showMessage({
+  //         message: `${this.props.auth.errMsg}`,
+  //         type: 'danger',
+  //         backgroundColor: '#d63031',
+  //         color: '#fff',
+  //         duration: 5000,
+  //       });
+  //     }
+  //   });
+  // };
+
+  login = values => {
+    this.props.authLogin(values.email, values.password).then(() => {
       if (this.props.auth.errMsg === '') {
         // ToastAndroid.showWithGravity(
         //   'Login success',
@@ -36,7 +66,6 @@ class Login extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
-          duration: 5000,
         });
         return this.props.navigation.navigate('Drawer');
       } else {
@@ -45,18 +74,25 @@ class Login extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
-          duration: 5000,
         });
       }
     });
   };
 
   render() {
+    const validationSchema = Yup.object().shape({
+      email: Yup.string()
+        .min(10, 'Min 10 Character!')
+        .required('Must be filled!'),
+      password: Yup.string()
+        .min(8, 'Min 8 Character!')
+        .required('Must be filled!'),
+    });
     return (
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>
           <Text style={styles.text1}>Login</Text>
-          <View style={styles.formInput}>
+          {/* <View style={styles.formInput}>
             <Input
               value={this.state.email}
               onChangeText={val => this.setState({email: val})}
@@ -88,7 +124,61 @@ class Login extends Component {
             <TouchableOpacity style={styles.buttonWhite}>
               <Text style={styles.fontButton2}>Login With Google</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
+
+          <Formik
+            validationSchema={validationSchema}
+            initialValues={{email: '', password: ''}}
+            onSubmit={values => this.login(values)}>
+            {({handleChange, handleBlur, handleSubmit, errors, values}) => (
+              <View style={styles.formInput}>
+                <Input
+                  type="email"
+                  variant="underlined"
+                  color="#fff"
+                  style={styles.input}
+                  placeholder="Enter your email"
+                  keyboardType="email-address"
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                />
+                {errors.email ? (
+                  <Text style={styles.textError}>{errors.email}</Text>
+                ) : null}
+                <Input
+                  type="password"
+                  variant="underlined"
+                  color="#fff"
+                  style={styles.input}
+                  placeholder="Enter your password"
+                  keyboardType="ascii-capable"
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                />
+                {errors.password ? (
+                  <Text style={styles.textError}>{errors.password}</Text>
+                ) : null}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('ForgotPassword')
+                  }>
+                  <Text style={styles.forpas}>Forgot password?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  // onPress={this.login}
+                  onPress={handleSubmit}
+                  style={styles.buttonYellow}>
+                  <Text style={styles.fontButton}>Login</Text>
+                </TouchableOpacity>
+                <Text style={styles.fontDetail}>or login in with</Text>
+                <TouchableOpacity style={styles.buttonWhite}>
+                  <Text style={styles.fontButton2}>Login With Google</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
         </View>
       </ImageBackground>
     );
@@ -167,5 +257,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 12,
+  },
+  textError: {
+    color: 'red',
+    fontFamily: 'Poppins-SemiBold',
   },
 });

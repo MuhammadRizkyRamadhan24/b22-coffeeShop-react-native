@@ -33,7 +33,6 @@ class Cart extends Component {
       type: 'danger',
       backgroundColor: '#d63031',
       color: '#fff',
-      duration: 4000,
     });
   };
 
@@ -142,7 +141,7 @@ class Cart extends Component {
           {this.props.carts.items.length > 0 ? (
             <ScrollView showsVerticalScrollIndicator={false}>
               {this.props.carts.items.map(d => (
-                <Card key={`${d.id}${d.end_price}`} data={d} />
+                <Card key={d.id + d.end_price} data={d} />
               ))}
             </ScrollView>
           ) : (

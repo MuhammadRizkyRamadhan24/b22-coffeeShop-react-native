@@ -68,9 +68,6 @@ export function DrawerContent(props) {
               <Text style={styles.label}>Privacy Policy</Text>
             </View>
           )}
-          onPress={() => {
-            props.navigation.navigate('');
-          }}
         />
         <DrawerItem
           style={styles.item}
@@ -80,9 +77,6 @@ export function DrawerContent(props) {
               <Text style={styles.label}>Security</Text>
             </View>
           )}
-          onPress={() => {
-            props.navigation.navigate('');
-          }}
         />
       </View>
       <Signout />

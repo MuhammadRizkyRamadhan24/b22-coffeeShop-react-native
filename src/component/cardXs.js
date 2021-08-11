@@ -71,7 +71,6 @@ const CardXs = props => {
       type: 'success',
       backgroundColor: '#6A4029',
       color: '#fff',
-      duration: 4000,
     });
     delete orders[getIndex];
     var newArray = orders.filter(

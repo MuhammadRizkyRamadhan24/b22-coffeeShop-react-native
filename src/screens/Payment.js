@@ -83,7 +83,6 @@ class Payment extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
-          duration: 4000,
         });
         this.props.navigation.navigate('Home');
         return this.props.deleteAllItems();
@@ -100,7 +99,6 @@ class Payment extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
-          duration: 4000,
         });
       });
   };
@@ -121,7 +119,6 @@ class Payment extends Component {
       type: 'danger',
       backgroundColor: '#d63031',
       color: '#fff',
-      duration: 4000,
     });
   };
 
@@ -146,7 +143,7 @@ class Payment extends Component {
         <View style={styles.wrapperCard}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {this.props.carts.items.map(d => (
-              <View key={d.id} style={styles.card}>
+              <View key={d.id + d.end_price} style={styles.card}>
                 <Image
                   style={styles.image}
                   source={{

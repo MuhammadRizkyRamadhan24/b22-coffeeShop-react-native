@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 16,
     fontFamily: 'Poppins-Bold',
-    fontSize: 22,
+    fontSize: 20,
   },
   itemPrice: {
     textAlign: 'center',

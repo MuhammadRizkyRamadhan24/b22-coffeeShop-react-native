@@ -59,19 +59,32 @@ class EditProfile extends Component {
 
   selectPicture = e => {
     if (!e.didCancel) {
+      console.log(e.assets[0]);
       const maxSize = 1024 * 1024 * 2;
       if (e.assets[0].fileSize < maxSize) {
-        this.setState({
-          pictureUri: e.assets[0].uri,
-          picture: e.assets[0],
-        });
+        if (
+          e.assets[0].type === 'image/jpeg' ||
+          e.assets[0].type === 'image/jpg' ||
+          e.assets[0].type === 'image/png'
+        ) {
+          this.setState({
+            pictureUri: e.assets[0].uri,
+            picture: e.assets[0],
+          });
+        } else {
+          showMessage({
+            message: 'File Not a Picture!',
+            type: 'danger',
+            backgroundColor: '#d63031',
+            color: '#fff',
+          });
+        }
       } else {
         showMessage({
           message: 'File To Large!',
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
-          duration: 5000,
         });
         this.setState({
           pictureUri: '',
@@ -82,7 +95,7 @@ class EditProfile extends Component {
   };
 
   setPicture = () => {
-    Alert.alert('Select Picture', 'Please select picture', [
+    Alert.alert('Select Picture', 'Please choose a picture', [
       {
         text: 'Cancel',
         style: 'cancel',
@@ -204,7 +217,6 @@ class EditProfile extends Component {
           type: 'success',
           backgroundColor: '#6A4029',
           color: '#fff',
-          duration: 4000,
         });
       } else {
         showMessage({
@@ -212,7 +224,6 @@ class EditProfile extends Component {
           type: 'danger',
           backgroundColor: '#d63031',
           color: '#fff',
-          duration: 4000,
         });
       }
     });

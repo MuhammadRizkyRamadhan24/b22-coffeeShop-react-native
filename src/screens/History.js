@@ -37,7 +37,6 @@ class History extends Component {
         type: 'success',
         backgroundColor: '#6A4029',
         color: '#fff',
-        duration: 4000,
       });
     });
   };
