@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import {Input} from 'native-base';
 import {showMessage} from 'react-native-flash-message';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
 import background from '../../assets/signup.png';
 import {connect} from 'react-redux';
@@ -23,8 +25,8 @@ class Signup extends Component {
     };
   }
 
-  register = () => {
-    const {email, password, phoneNumber} = this.state;
+  register = values => {
+    const {email, password, phoneNumber} = values;
     this.props.authRegister(email, phoneNumber, password).then(() => {
       if (this.props.auth.errMsg === '') {
         showMessage({
@@ -46,50 +48,80 @@ class Signup extends Component {
   };
 
   render() {
+    const validationSchema = Yup.object().shape({
+      email: Yup.string()
+        .min(10, 'Min 10 Character!')
+        .required('Must be filled!'),
+      password: Yup.string()
+        .min(8, 'Min 8 Character!')
+        .required('Must be filled!'),
+      phoneNumber: Yup.string()
+        .min(11, 'Min 11 Character!')
+        .required('Must be filled!'),
+    });
     return (
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>
           <Text style={styles.text1}>Signup</Text>
-          <View style={styles.formInput}>
-            <Input
-              value={this.state.email}
-              onChangeText={val => this.setState({email: val})}
-              type="email"
-              variant="underlined"
-              color="#fff"
-              style={styles.input}
-              placeholder="Enter your email"
-              keyboardType="email-address"
-            />
-            <Input
-              value={this.state.password}
-              onChangeText={val => this.setState({password: val})}
-              type="password"
-              variant="underlined"
-              color="#fff"
-              style={styles.input}
-              placeholder="Enter your password"
-              keyboardType="ascii-capable"
-            />
-            <Input
-              value={this.state.phoneNumber}
-              onChangeText={val => this.setState({phoneNumber: val})}
-              type="text"
-              variant="underlined"
-              color="#fff"
-              style={styles.input}
-              placeholder="Enter your phone number"
-              keyboardType="number-pad"
-            />
-            <TouchableOpacity
-              onPress={this.register}
-              style={styles.buttonBrown}>
-              <Text style={styles.fontButton}>Create Account</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonWhite}>
-              <Text style={styles.fontButton2}>Create With Google</Text>
-            </TouchableOpacity>
-          </View>
+          <Formik
+            validationSchema={validationSchema}
+            initialValues={{email: '', password: '', phoneNumber: ''}}
+            onSubmit={values => this.register(values)}>
+            {({handleChange, handleBlur, handleSubmit, errors, values}) => (
+              <View style={styles.formInput}>
+                <Input
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  type="email"
+                  variant="underlined"
+                  color="#fff"
+                  style={styles.input}
+                  placeholder="Enter your email"
+                  keyboardType="email-address"
+                />
+                {errors.email ? (
+                  <Text style={styles.textError}>{errors.email}</Text>
+                ) : null}
+                <Input
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  type="password"
+                  variant="underlined"
+                  color="#fff"
+                  style={styles.input}
+                  placeholder="Enter your password"
+                  keyboardType="ascii-capable"
+                />
+                {errors.password ? (
+                  <Text style={styles.textError}>{errors.password}</Text>
+                ) : null}
+                <Input
+                  onChangeText={handleChange('phoneNumber')}
+                  onBlur={handleBlur('phoneNumber')}
+                  value={values.phoneNumber}
+                  type="text"
+                  variant="underlined"
+                  color="#fff"
+                  style={styles.input}
+                  placeholder="Enter your phone number"
+                  keyboardType="number-pad"
+                />
+                {errors.phoneNumber ? (
+                  <Text style={styles.textError}>{errors.phoneNumber}</Text>
+                ) : null}
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  style={styles.buttonBrown}>
+                  <Text style={styles.fontButton}>Create Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonWhite}>
+                  <Text style={styles.fontButton2}>Create With Google</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
         </View>
       </ImageBackground>
     );
@@ -164,5 +196,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 12,
+  },
+  textError: {
+    color: 'red',
+    fontFamily: 'Poppins-SemiBold',
   },
 });

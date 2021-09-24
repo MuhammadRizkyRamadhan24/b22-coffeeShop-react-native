@@ -46,7 +46,6 @@ export const createTransaction =
     token,
   ) =>
   async dispatch => {
-    console.log(item_id);
     const form = new URLSearchParams();
     item_id.map(value => form.append('item_id', value));
     item_amount.map(value => form.append('item_amount', value));

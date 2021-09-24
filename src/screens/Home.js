@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Spinner} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import RNBootSplash from 'react-native-bootsplash';
 import Card from '../component/CardLg';
 import Subtitle from '../component/Subtitle';
 import Seemore from '../component/Seemore';
@@ -61,6 +62,7 @@ class Home extends Component {
                   addOn: this.props.products.data,
                   isLoading: false,
                 });
+                RNBootSplash.hide({fade: true});
               });
             });
           });
@@ -78,13 +80,13 @@ class Home extends Component {
     });
   };
 
-  componentDidMount() {
-    this.getUserData();
-    this.getProduct();
+  async componentDidMount() {
+    await this.getUserData();
+    await this.getProduct();
   }
 
   render() {
-    // console.log(this.props, this.state, 'home');
+    // console.log(this.props.user);
     return (
       <>
         {this.state.isLoading !== true ? (
@@ -93,7 +95,7 @@ class Home extends Component {
               {this.state.loading !== true ? (
                 this.props.user.data !== [] ? (
                   <>
-                    {this.props.user.data[0].image === null ? (
+                    {this.props.user.data.image === null ? (
                       <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.navigate('Profile')
@@ -115,7 +117,7 @@ class Home extends Component {
                         <Image
                           style={styles.profile}
                           source={{
-                            uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                            uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data.image}`,
                           }}
                         />
                       </TouchableOpacity>
@@ -135,7 +137,9 @@ class Home extends Component {
                 style={styles.marginIcon}>
                 <MaterialIcons name="shopping-cart" color="#000" size={30} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.marginIcon}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('ChatHome')}
+                style={styles.marginIcon}>
                 <MaterialIcons
                   name="chat-bubble-outline"
                   color="#000"

@@ -89,11 +89,6 @@ class Payment extends Component {
       })
       .catch(err => {
         console.log(err);
-        // ToastAndroid.showWithGravity(
-        //   'Something wrong',
-        //   ToastAndroid.LONG,
-        //   ToastAndroid.TOP,
-        // );
         showMessage({
           message: 'Something wrong!',
           type: 'danger',
@@ -123,8 +118,6 @@ class Payment extends Component {
   };
 
   render() {
-    // console.log(this.state);
-    // console.log(this.props.route.params.orders);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>

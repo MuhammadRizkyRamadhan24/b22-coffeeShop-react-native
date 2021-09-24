@@ -106,7 +106,6 @@ class Cart extends Component {
         item_variant: item_variant,
         item_additional_price: item_additional_price,
       });
-      // console.log(this.props.carts.items, 'hehe');
       const subTotal = this.props.carts.items
         .map((element, idx) => element.end_price * element.amount)
         .reduce((acc, curr) => acc + curr);
@@ -124,7 +123,6 @@ class Cart extends Component {
   }
 
   render() {
-    // console.log(this.props.carts.items);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>

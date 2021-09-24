@@ -16,7 +16,6 @@ export const changeUser = (token, Data) => async dispatch => {
   form.append('phone_number', Data.phone_number);
   form.append('date_birth', Data.date_birth);
   form.append('address', Data.address);
-  console.log(form);
   try {
     const {data} = await http(token).patch(
       `${REACT_APP_BASE_URL}/private/profile`,

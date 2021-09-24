@@ -19,48 +19,13 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // email: '',
-      // password: '',
       isLoading: true,
     };
   }
 
-  // login = () => {
-  //   this.props.authLogin(this.state.email, this.state.password).then(() => {
-  //     if (this.props.auth.errMsg === '') {
-  //       // ToastAndroid.showWithGravity(
-  //       //   'Login success',
-  //       //   ToastAndroid.LONG,
-  //       //   ToastAndroid.TOP,
-  //       // );
-  //       showMessage({
-  //         message: 'Login success!',
-  //         type: 'success',
-  //         backgroundColor: '#6A4029',
-  //         color: '#fff',
-  //         duration: 5000,
-  //       });
-  //       return this.props.navigation.navigate('Drawer');
-  //     } else {
-  //       showMessage({
-  //         message: `${this.props.auth.errMsg}`,
-  //         type: 'danger',
-  //         backgroundColor: '#d63031',
-  //         color: '#fff',
-  //         duration: 5000,
-  //       });
-  //     }
-  //   });
-  // };
-
   login = values => {
     this.props.authLogin(values.email, values.password).then(() => {
       if (this.props.auth.errMsg === '') {
-        // ToastAndroid.showWithGravity(
-        //   'Login success',
-        //   ToastAndroid.LONG,
-        //   ToastAndroid.TOP,
-        // );
         showMessage({
           message: 'Login success!',
           type: 'success',
@@ -92,40 +57,6 @@ class Login extends Component {
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>
           <Text style={styles.text1}>Login</Text>
-          {/* <View style={styles.formInput}>
-            <Input
-              value={this.state.email}
-              onChangeText={val => this.setState({email: val})}
-              type="email"
-              variant="underlined"
-              color="#fff"
-              style={styles.input}
-              placeholder="Enter your email"
-              keyboardType="email-address"
-            />
-            <Input
-              value={this.state.password}
-              onChangeText={val => this.setState({password: val})}
-              type="password"
-              variant="underlined"
-              color="#fff"
-              style={styles.input}
-              placeholder="Enter your password"
-              keyboardType="ascii-capable"
-            />
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-              <Text style={styles.forpas}>Forgot password?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.login} style={styles.buttonYellow}>
-              <Text style={styles.fontButton}>Login</Text>
-            </TouchableOpacity>
-            <Text style={styles.fontDetail}>or login in with</Text>
-            <TouchableOpacity style={styles.buttonWhite}>
-              <Text style={styles.fontButton2}>Login With Google</Text>
-            </TouchableOpacity>
-          </View> */}
-
           <Formik
             validationSchema={validationSchema}
             initialValues={{email: '', password: ''}}
@@ -167,7 +98,6 @@ class Login extends Component {
                   <Text style={styles.forpas}>Forgot password?</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  // onPress={this.login}
                   onPress={handleSubmit}
                   style={styles.buttonYellow}>
                   <Text style={styles.fontButton}>Login</Text>

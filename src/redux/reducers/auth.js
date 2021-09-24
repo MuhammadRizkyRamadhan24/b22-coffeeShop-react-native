@@ -2,6 +2,7 @@ const initialState = {
   token: null,
   errMsg: '',
   msg: '',
+  id: '',
 };
 
 const auth = (state = initialState, action) => {
@@ -10,6 +11,7 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.results.token,
+        id: action.payload.results.id,
         msg: action.payload.message,
       };
     }

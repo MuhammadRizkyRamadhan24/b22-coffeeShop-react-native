@@ -59,7 +59,6 @@ class EditProfile extends Component {
 
   selectPicture = e => {
     if (!e.didCancel) {
-      console.log(e.assets[0]);
       const maxSize = 1024 * 1024 * 2;
       if (e.assets[0].fileSize < maxSize) {
         if (
@@ -114,7 +113,7 @@ class EditProfile extends Component {
   getDataUser = () => {
     const {token} = this.props.auth;
     this.props.getUserById(token).then(() => {
-      const parse = Date.parse(this.props.user.data[0].date_birth);
+      const parse = Date.parse(this.props.user.data.date_birth);
       const newDate = new Date(parse);
       const date = newDate.getDate();
       const month = newDate.getMonth();
@@ -122,12 +121,12 @@ class EditProfile extends Component {
       const final = `${year}-${month + 1}-${date}`;
       this.setState({
         isLoading: false,
-        display_name: this.props.user.data[0].display_name,
-        gender: this.props.user.data[0].gender,
-        email: this.props.user.data[0].email,
-        phone_number: this.props.user.data[0].phone_number,
+        display_name: this.props.user.data.display_name,
+        gender: this.props.user.data.gender,
+        email: this.props.user.data.email,
+        phone_number: this.props.user.data.phone_number,
         date_birth: final,
-        address: this.props.user.data[0].address,
+        address: this.props.user.data.address,
       });
     });
   };
@@ -135,7 +134,7 @@ class EditProfile extends Component {
   getDataUserUpdate = () => {
     const {token} = this.props.auth;
     this.props.getUserById(token).then(() => {
-      const parse = Date.parse(this.props.user.data[0].date_birth);
+      const parse = Date.parse(this.props.user.data.date_birth);
       const newDate = new Date(parse);
       const date = newDate.getDate();
       const month = newDate.getMonth();
@@ -143,12 +142,12 @@ class EditProfile extends Component {
       const final = `${year}-${month + 1}-${date}`;
       this.setState({
         isLoading: false,
-        display_name: this.props.user.data[0].display_name,
-        gender: this.props.user.data[0].gender,
-        email: this.props.user.data[0].email,
-        phone_number: this.props.user.data[0].phone_number,
+        display_name: this.props.user.data.display_name,
+        gender: this.props.user.data.gender,
+        email: this.props.user.data.email,
+        phone_number: this.props.user.data.phone_number,
         date_birth: final,
-        address: this.props.user.data[0].address,
+        address: this.props.user.data.address,
         pictureUri: '',
         picture: null,
       });
@@ -240,6 +239,7 @@ class EditProfile extends Component {
   }
 
   render() {
+    // console.log(this.props.user);
     return (
       <>
         {this.state.isLoading === false ? (
@@ -256,13 +256,13 @@ class EditProfile extends Component {
               </View>
             </View>
             <TouchableOpacity onPress={this.setPicture}>
-              {this.props.user.data[0].image !== null && (
+              {this.props.user.data.image !== null && (
                 <Image
                   style={styles.image}
                   source={
                     this.state.pictureUri === ''
                       ? {
-                          uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                          uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data.image}`,
                         }
                       : {
                           uri: this.state.pictureUri,
@@ -270,7 +270,7 @@ class EditProfile extends Component {
                   }
                 />
               )}
-              {this.props.user.data[0].image === null && (
+              {this.props.user.data.image === null && (
                 <Image
                   style={styles.image}
                   source={

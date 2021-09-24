@@ -20,12 +20,12 @@ const HeadDrawer = props => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
-
+  // console.log(props.user.data, 'header');
   return (
     <View style={styles.wrapperProfile}>
       {loading === false ? (
         <>
-          {props.user.data[0].image === null && (
+          {props.user.data.image === null && (
             <Image
               style={styles.image}
               source={{
@@ -33,16 +33,16 @@ const HeadDrawer = props => {
               }}
             />
           )}
-          {props.user.data[0].image !== null && (
+          {props.user.data.image !== null && (
             <Image
               style={styles.image}
               source={{
-                uri: `${REACT_APP_BASE_URL}/static/images/${props.user.data[0].image}`,
+                uri: `${REACT_APP_BASE_URL}/static/images/${props.user.data.image}`,
               }}
             />
           )}
-          <Text style={styles.name}>{props.user.data[0].display_name}</Text>
-          <Text style={styles.email}>{props.user.data[0].email}</Text>
+          <Text style={styles.name}>{props.user.data.display_name}</Text>
+          <Text style={styles.email}>{props.user.data.email}</Text>
         </>
       ) : (
         <>

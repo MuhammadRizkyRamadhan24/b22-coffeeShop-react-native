@@ -6,10 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-
+import RNBootSplash from 'react-native-bootsplash';
 import background from '../../assets/welcomeImage.png';
 
 export default class WelcomeScreen extends Component {
+  componentDidMount() {
+    RNBootSplash.hide({fade: true});
+  }
   render() {
     return (
       <ImageBackground source={background} style={styles.background}>

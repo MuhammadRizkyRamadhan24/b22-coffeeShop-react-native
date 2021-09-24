@@ -2,11 +2,9 @@ import {http} from '../../helpers/http';
 import {REACT_APP_BASE_URL} from '@env';
 
 export const authLogin = (email, password) => async dispatch => {
-  console.log(REACT_APP_BASE_URL);
   const form = new URLSearchParams();
   form.append('email', email);
   form.append('password', password);
-  console.log(form.toString());
   try {
     const {data} = await http().post(
       `${REACT_APP_BASE_URL}/auth/login`,

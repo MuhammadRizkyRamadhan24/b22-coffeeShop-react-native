@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 
 class Profile extends Component {
   render() {
+    // console.log(this.props.user.data, 'profile');
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>
@@ -39,7 +40,7 @@ class Profile extends Component {
           </View>
           <View style={styles.wrapperContent}>
             <View>
-              {this.props.user.data[0].image === null && (
+              {this.props.user.data.image === null && (
                 <Image
                   style={styles.image}
                   source={{
@@ -47,27 +48,27 @@ class Profile extends Component {
                   }}
                 />
               )}
-              {this.props.user.data[0].image !== null && (
+              {this.props.user.data.image !== null && (
                 <Image
                   style={styles.image}
                   source={{
-                    uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data[0].image}`,
+                    uri: `${REACT_APP_BASE_URL}/static/images/${this.props.user.data.image}`,
                   }}
                 />
               )}
             </View>
             <View style={styles.contentRight}>
               <Text style={styles.contentTextBold}>
-                {this.props.user.data[0].display_name}
+                {this.props.user.data.display_name}
               </Text>
               <Text style={styles.contentText}>
-                {this.props.user.data[0].email}
+                {this.props.user.data.email}
               </Text>
               <Text style={styles.contentText}>
-                {this.props.user.data[0].phone_number}
+                {this.props.user.data.phone_number}
               </Text>
               <Text style={styles.contentText}>
-                {this.props.user.data[0].address}
+                {this.props.user.data.address}
               </Text>
             </View>
           </View>

@@ -25,7 +25,8 @@ import History from './src/screens/History';
 import Promo from './src/screens/Promo';
 import {connect} from 'react-redux';
 import EditPassword from './src/screens/EditPassword';
-import RNBootSplash from 'react-native-bootsplash';
+import ChatRoom from './src/screens/ChatRoom';
+import ChatHome from './src/screens/ChatHome';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -52,9 +53,6 @@ const styles = StyleSheet.create({
 });
 
 const App = props => {
-  React.useEffect(() => {
-    RNBootSplash.hide({fade: true});
-  }, []);
   return (
     <NavigationContainer>
       <NativeBaseProvider>
@@ -132,6 +130,16 @@ const App = props => {
               <Stack.Screen
                 name="EditPassword"
                 component={EditPassword}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ChatHome"
+                component={ChatHome}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ChatRoom"
+                component={ChatRoom}
                 options={{headerShown: false}}
               />
             </React.Fragment>

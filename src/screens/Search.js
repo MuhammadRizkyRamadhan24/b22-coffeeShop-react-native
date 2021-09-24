@@ -108,18 +108,6 @@ class Search extends Component {
   }
 
   render() {
-    // const isCloseToBottom = ({
-    //   layoutMeasurement,
-    //   contentOffset,
-    //   contentSize,
-    // }) => {
-    //   const paddingToBottom = 20;
-    //   return (
-    //     layoutMeasurement.height + contentOffset.y >=
-    //     contentSize.height - paddingToBottom
-    //   );
-    // };
-    console.log(this.state.sort);
     return (
       <>
         <View style={styles.wrapper}>

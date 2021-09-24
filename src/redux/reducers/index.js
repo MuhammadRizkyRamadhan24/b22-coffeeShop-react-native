@@ -8,6 +8,7 @@ import products from './products';
 import categories from './categories';
 import transactions from './transactions';
 import user from './user';
+import chat from './chat';
 
 const persistAuth = {
   key: 'auth',
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   categories,
   transactions,
   user,
+  chat,
 });
 
 export default rootReducer;
