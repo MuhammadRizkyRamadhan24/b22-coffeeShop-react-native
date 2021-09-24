@@ -86,7 +86,7 @@ class Home extends Component {
   }
 
   render() {
-    // console.log(this.props.user);
+    // console.log(REACT_APP_BASE_URL);
     return (
       <>
         {this.state.isLoading !== true ? (
@@ -290,43 +290,6 @@ class Home extends Component {
                   showsHorizontalScrollIndicator={false}>
                   {this.state.foods !== [] ? (
                     this.state.foods.map(d => (
-                      <Card
-                        func={() =>
-                          this.props.navigation.navigate('ProductDetail', {
-                            id: d.id,
-                          })
-                        }
-                        key={d.id}
-                        name={d.name}
-                        price={d.price}
-                        image={d.image}
-                      />
-                    ))
-                  ) : (
-                    <Spinner color="black" />
-                  )}
-                </ScrollView>
-              </View>
-
-              <View style={styles.wrapperCard}>
-                <View style={styles.wrapperSubtitle}>
-                  <View style={styles.subtitle}>
-                    <Subtitle title={this.state.categories[4].name_category} />
-                  </View>
-                  <Seemore
-                    func={() =>
-                      this.props.navigation.navigate('Seemore', {
-                        id: 5,
-                        title: this.state.categories[4].name_category,
-                      })
-                    }
-                  />
-                </View>
-                <ScrollView
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}>
-                  {this.state.addOn !== [] ? (
-                    this.state.addOn.map(d => (
                       <Card
                         func={() =>
                           this.props.navigation.navigate('ProductDetail', {

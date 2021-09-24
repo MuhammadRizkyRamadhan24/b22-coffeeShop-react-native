@@ -239,7 +239,7 @@ class EditProfile extends Component {
   }
 
   render() {
-    // console.log(this.props.user);
+    // console.log(REACT_APP_BASE_URL);
     return (
       <>
         {this.state.isLoading === false ? (

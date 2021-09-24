@@ -3,6 +3,7 @@ import {http} from '../../helpers/http';
 import {REACT_APP_BASE_URL} from '@env';
 
 export const searchUser = (search, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/private/chat?search=${search}`,
@@ -20,6 +21,7 @@ export const searchUser = (search, token) => async dispatch => {
 };
 
 export const getChatHome = (id, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/chat/home?id=${id}`,
@@ -37,6 +39,7 @@ export const getChatHome = (id, token) => async dispatch => {
 };
 
 export const getChatRoom = (id_login, id_people, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/chat?id_sender=${id_login}&id_receiver=${id_people}`,
@@ -55,6 +58,7 @@ export const getChatRoom = (id_login, id_people, token) => async dispatch => {
 
 export const postChat =
   (id_sender, id_receiver, chat, token) => async dispatch => {
+    console.log(REACT_APP_BASE_URL);
     const form = new URLSearchParams();
     form.append('id_sender', id_sender);
     form.append('id_receiver', id_receiver);
@@ -78,6 +82,7 @@ export const postChat =
 
 export const postAttachment =
   (id_sender, id_receiver, Data, token) => async dispatch => {
+    console.log(REACT_APP_BASE_URL);
     const form = new FormData();
     form.append('id_sender', id_sender);
     form.append('id_receiver', id_receiver);
@@ -104,6 +109,7 @@ export const postAttachment =
   };
 
 export const deleteChat = (token, id) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).put(
       `${REACT_APP_BASE_URL}/chat/delete/${id}`,

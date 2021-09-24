@@ -39,7 +39,7 @@ class Delivery extends Component {
   };
 
   alertButton = () => {
-    if (this.props.user.data[0].address === null) {
+    if (this.props.user.data.address === null) {
       showMessage({
         message: 'Address cannot be empty!',
         type: 'danger',
@@ -90,10 +90,10 @@ class Delivery extends Component {
             <Text style={styles.textAddressBold}>Iskandar Street</Text>
 
             <Text style={styles.textAddress}>
-              {this.props.user.data[0].address}
+              {this.props.user.data.address}
             </Text>
             <Text style={styles.textAddress}>
-              {this.props.user.data[0].phone_number}
+              {this.props.user.data.phone_number}
             </Text>
           </ScrollView>
         </View>
@@ -126,7 +126,7 @@ class Delivery extends Component {
         </View>
 
         {this.state.delivery_method !== '' &&
-        this.props.user.data[0].address !== null ? (
+        this.props.user.data.address !== null ? (
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate('Payment', {

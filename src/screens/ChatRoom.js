@@ -175,18 +175,20 @@ class ChatRoom extends Component {
     ]);
   };
 
-  alertDelete = id => {
+  alertDelete = (id, deleted) => {
     console.log(id);
-    Alert.alert('Delete Message', 'Do you want delete it?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Yes',
-        onPress: () => this.deleteMessage(id),
-      },
-    ]);
+    if (deleted === '0') {
+      Alert.alert('Delete Message', 'Do you want delete it?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => this.deleteMessage(id),
+        },
+      ]);
+    }
   };
 
   deleteMessage = id => {
@@ -209,6 +211,7 @@ class ChatRoom extends Component {
   };
 
   render() {
+    // console.log(REACT_APP_BASE_URL);
     const {modalVisible} = this.state;
     return (
       <View style={styles.wrapper}>
@@ -244,14 +247,14 @@ class ChatRoom extends Component {
               <TouchableOpacity
                 style={styles.buttonClose}
                 onPress={() => this.setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Close</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
 
         <View style={styles.wrapperNav}>
-          <View>
+          <View style={styles.wrapperBack}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Home')}>
               <MaterialIcons name="arrow-back-ios" color="#000" size={30} />
@@ -285,8 +288,10 @@ class ChatRoom extends Component {
                   {item.id_sender === this.props.auth.id ? (
                     <View style={styles.wrapperChatBubbleSender}>
                       <TouchableOpacity
-                        onLongPress={() => this.alertDelete(item.id)}
-                        delayLongPress={1000}
+                        onLongPress={() =>
+                          this.alertDelete(item.id, item.deleted)
+                        }
+                        delayLongPress={500}
                         style={styles.containerChatBubbleSender}>
                         {item.deleted === '1' ? (
                           <Text style={styles.chatTextDeleted}>
@@ -313,7 +318,9 @@ class ChatRoom extends Component {
                   ) : (
                     <View style={styles.wrapperChatBubbleReceiver}>
                       <TouchableOpacity
-                        onLongPress={() => this.alertDelete(item.id)}
+                        onLongPress={() =>
+                          this.alertDelete(item.id, item.deleted)
+                        }
                         delayLongPress={1000}
                         style={styles.containerChatBubbleReceiver}>
                         {item.deleted === '1' ? (
@@ -410,24 +417,29 @@ const styles = StyleSheet.create({
   },
   wrapperNav: {
     alignItems: 'center',
-    marginTop: 48,
+    marginTop: 30,
     width: '85%',
-    height: 'auto',
     flexDirection: 'row',
+  },
+  wrapperBack: {
+    flex: 1,
+    justifyContent: 'center',
   },
   titleScreen: {
     fontSize: 16,
     fontFamily: 'Poppins-Bold',
+    marginLeft: '8%',
+    width: '70%',
   },
   wrapperHeader: {
-    width: '80%',
+    flex: 5,
     alignItems: 'center',
+    flexDirection: 'row',
   },
   imageReceiver: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     borderRadius: 999,
-    marginBottom: 10,
   },
   wrapperContent: {
     flex: 1,

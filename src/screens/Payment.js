@@ -118,6 +118,7 @@ class Payment extends Component {
   };
 
   render() {
+    // console.log(REACT_APP_BASE_URL);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>

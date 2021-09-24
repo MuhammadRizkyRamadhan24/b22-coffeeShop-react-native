@@ -2,6 +2,7 @@ import {http} from '../../helpers/http';
 import {REACT_APP_BASE_URL} from '@env';
 
 export const authLogin = (email, password) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   const form = new URLSearchParams();
   form.append('email', email);
   form.append('password', password);
@@ -30,6 +31,7 @@ export const authLogin = (email, password) => async dispatch => {
 
 export const authRegister =
   (email, phone_number, password) => async dispatch => {
+    console.log(REACT_APP_BASE_URL);
     const form = new URLSearchParams();
     form.append('email', email);
     form.append('phone_number', phone_number);

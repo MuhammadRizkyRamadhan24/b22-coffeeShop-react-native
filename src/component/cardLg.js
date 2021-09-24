@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {REACT_APP_BASE_URL} from '@env';
 
 const CardLg = props => {
+  // console.log(REACT_APP_BASE_URL);
   return (
     <TouchableOpacity onPress={props.func}>
       <View style={styles.card}>

@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 
 class Profile extends Component {
   render() {
-    // console.log(this.props.user.data, 'profile');
+    // console.log(REACT_APP_BASE_URL);
     return (
       <View style={styles.wrapper}>
         <View style={styles.wrapperNav}>

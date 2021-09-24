@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import {setOrders} from '../redux/actions/carts';
 
 const CardXs = props => {
+  // console.log(REACT_APP_BASE_URL);
   const data = props.data;
 
   const plusOrder = orderData => {

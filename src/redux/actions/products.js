@@ -2,6 +2,7 @@ import {http} from '../../helpers/http';
 import {REACT_APP_BASE_URL} from '@env';
 
 export const getDataByCategories = (id, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/category/${id}/items`,
@@ -19,6 +20,7 @@ export const getDataByCategories = (id, token) => async dispatch => {
 };
 
 export const searchData = (search, page, order, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/items?search=${search}&limit=6&order=${order}&sort=asc&page=${page}`,
@@ -36,6 +38,7 @@ export const searchData = (search, page, order, token) => async dispatch => {
 };
 
 export const getDataById = (id, token) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(`${REACT_APP_BASE_URL}/items/${id}`);
     dispatch({

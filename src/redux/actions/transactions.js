@@ -2,6 +2,7 @@ import {http} from '../../helpers/http';
 import {REACT_APP_BASE_URL} from '@env';
 
 export const getHistory = token => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/private/transaction`,
@@ -19,6 +20,7 @@ export const getHistory = token => async dispatch => {
 };
 
 export const getDetailHistory = (token, id) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).get(
       `${REACT_APP_BASE_URL}/private/transaction/${id}/detail`,
@@ -46,6 +48,7 @@ export const createTransaction =
     token,
   ) =>
   async dispatch => {
+    console.log(REACT_APP_BASE_URL);
     const form = new URLSearchParams();
     item_id.map(value => form.append('item_id', value));
     item_amount.map(value => form.append('item_amount', value));
@@ -73,6 +76,7 @@ export const createTransaction =
   };
 
 export const deleteTransaction = (token, id) => async dispatch => {
+  console.log(REACT_APP_BASE_URL);
   try {
     const {data} = await http(token).delete(
       `${REACT_APP_BASE_URL}/private/transaction/${id}`,

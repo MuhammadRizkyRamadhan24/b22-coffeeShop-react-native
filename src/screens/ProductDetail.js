@@ -73,6 +73,7 @@ class ProductDetail extends Component {
   }
 
   render() {
+    // console.log(REACT_APP_BASE_URL);
     return (
       <>
         {this.state.isLoading !== true ? (

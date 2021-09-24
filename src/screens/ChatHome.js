@@ -72,6 +72,7 @@ class ChatHome extends Component {
   }
 
   render() {
+    // console.log(REACT_APP_BASE_URL);
     return (
       <>
         {this.state.loading === false ? (
@@ -169,7 +170,9 @@ class ChatHome extends Component {
                         )}
                       </>
                     ) : (
-                      <Text style={styles.fontCardChat}>Message Deleted!</Text>
+                      <Text style={styles.fontCardChatDelete}>
+                        Message Deleted!
+                      </Text>
                     )}
                   </View>
                 </TouchableOpacity>
@@ -299,5 +302,8 @@ const styles = StyleSheet.create({
   },
   fontCardChat: {
     fontFamily: 'Poppins-Regular',
+  },
+  fontCardChatDelete: {
+    fontFamily: 'Poppins-SemiBoldItalic',
   },
 });

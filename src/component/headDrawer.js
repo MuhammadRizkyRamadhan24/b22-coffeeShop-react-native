@@ -20,7 +20,7 @@ const HeadDrawer = props => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
-  // console.log(props.user.data, 'header');
+  // console.log(REACT_APP_BASE_URL);
   return (
     <View style={styles.wrapperProfile}>
       {loading === false ? (
