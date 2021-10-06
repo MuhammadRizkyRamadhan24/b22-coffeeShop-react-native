@@ -23,11 +23,13 @@ export default class WelcomeScreen extends Component {
               Everyone
             </Text>
           </View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('LoginSignup')}
-            style={styles.button}>
-            <Text style={[styles.text, styles.fontSize2]}>Get started</Text>
-          </TouchableOpacity>
+          <View style={styles.wrapperButton}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('LoginSignup')}
+              style={styles.button}>
+              <Text style={[styles.text, styles.fontSize2]}>Get started</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     );
@@ -45,16 +47,21 @@ const styles = StyleSheet.create({
   },
   wrapperText: {
     alignItems: 'center',
-    marginTop: 169,
-    width: 325,
-    height: 112,
+    flex: 3,
+    justifyContent: 'center',
+  },
+  wrapperButton: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
+    alignItems: 'center',
   },
   fontSize1: {
-    fontSize: 65,
+    fontSize: 60,
     color: '#fff',
   },
   fontSize2: {
-    fontSize: 17,
+    fontSize: 15,
   },
   text: {
     fontFamily: 'Poppins-Bold',
@@ -63,9 +70,8 @@ const styles = StyleSheet.create({
     top: -50,
   },
   button: {
-    marginTop: 440,
-    width: 340,
-    height: 70,
+    width: '80%',
+    height: '30%',
     backgroundColor: '#FFBA33',
     borderRadius: 20,
     justifyContent: 'center',

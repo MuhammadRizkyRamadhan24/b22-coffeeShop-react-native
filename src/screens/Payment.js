@@ -131,81 +131,83 @@ class Payment extends Component {
             <Text style={styles.titleScreen}>Payment</Text>
           </View>
         </View>
-        <View style={styles.wrapperSubtitle}>
-          <Text style={styles.subtitle}>Products</Text>
-        </View>
-        <View style={styles.wrapperCard}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {this.props.carts.items.map(d => (
-              <View key={d.id + d.end_price} style={styles.card}>
-                <Image
-                  style={styles.image}
-                  source={{
-                    uri: `${REACT_APP_BASE_URL}/static/images/${d.image}`,
-                  }}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.wrapperSubtitle}>
+            <Text style={styles.subtitle}>Products</Text>
+          </View>
+          <View style={styles.wrapperCard}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {this.props.carts.items.map(d => (
+                <View key={d.id + d.end_price} style={styles.card}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: `${REACT_APP_BASE_URL}/static/images/${d.image}`,
+                    }}
+                  />
+                  <View style={styles.wrapperMiddleCard}>
+                    <Text style={styles.middleText}>{d.name}</Text>
+                    <Text style={styles.middleText}>{d.amount}</Text>
+                    <Text style={styles.middleText}>{d.variant}</Text>
+                  </View>
+                  <View style={styles.wrapperRightCard}>
+                    <Text style={styles.rightText}>
+                      IDR {Number(d.end_price).toLocaleString('en')}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.wrapperSubtitle}>
+            <Text style={styles.subtitle}>Payment method</Text>
+          </View>
+          <View style={styles.wrapperRadio}>
+            <Radio.Group
+              name="radio-button"
+              value={this.state.payment_method}
+              onChange={nextValue => {
+                this.setState({payment_method: nextValue});
+              }}>
+              <Radio accessibilityLabel="test" colorScheme="gray" value="Card">
+                <MaterialIcons
+                  style={styles.logoRadio}
+                  name="credit-card"
+                  color="#F47B0A"
+                  size={30}
                 />
-                <View style={styles.wrapperMiddleCard}>
-                  <Text style={styles.middleText}>{d.name}</Text>
-                  <Text style={styles.middleText}>{d.amount}</Text>
-                  <Text style={styles.middleText}>{d.variant}</Text>
-                </View>
-                <View style={styles.wrapperRightCard}>
-                  <Text style={styles.rightText}>
-                    IDR {Number(d.end_price).toLocaleString('en')}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-        <View style={styles.wrapperSubtitle}>
-          <Text style={styles.subtitle}>Payment method</Text>
-        </View>
-        <View style={styles.wrapperRadio}>
-          <Radio.Group
-            name="radio-button"
-            value={this.state.payment_method}
-            onChange={nextValue => {
-              this.setState({payment_method: nextValue});
-            }}>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="Card">
-              <MaterialIcons
-                style={styles.logoRadio}
-                name="credit-card"
-                color="#F47B0A"
-                size={30}
-              />
-              <Text style={styles.radio}>Card</Text>
-            </Radio>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="Bank">
-              <MaterialIcons
-                style={styles.logoRadio}
-                name="account-balance"
-                color="#895537"
-                size={30}
-              />
-              <Text style={styles.radio}>Bank account</Text>
-            </Radio>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="COD">
-              <MaterialIcons
-                style={styles.logoRadio}
-                name="delivery-dining"
-                color="#FFBA33"
-                size={30}
-              />
-              <Text style={styles.radio}>Cash on delivery</Text>
-            </Radio>
-          </Radio.Group>
-        </View>
-        {this.state.payment_method !== '' ? (
-          <TouchableOpacity onPress={this.alert} style={styles.button}>
-            <Text style={styles.buttonText}>Proceed payment</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={this.alertButton} style={styles.button}>
-            <Text style={styles.buttonText}>Proceed payment</Text>
-          </TouchableOpacity>
-        )}
+                <Text style={styles.radio}>Card</Text>
+              </Radio>
+              <Radio accessibilityLabel="test" colorScheme="gray" value="Bank">
+                <MaterialIcons
+                  style={styles.logoRadio}
+                  name="account-balance"
+                  color="#895537"
+                  size={30}
+                />
+                <Text style={styles.radio}>Bank account</Text>
+              </Radio>
+              <Radio accessibilityLabel="test" colorScheme="gray" value="COD">
+                <MaterialIcons
+                  style={styles.logoRadio}
+                  name="delivery-dining"
+                  color="#FFBA33"
+                  size={30}
+                />
+                <Text style={styles.radio}>Cash on delivery</Text>
+              </Radio>
+            </Radio.Group>
+          </View>
+          {this.state.payment_method !== '' ? (
+            <TouchableOpacity onPress={this.alert} style={styles.button}>
+              <Text style={styles.buttonText}>Proceed payment</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={this.alertButton} style={styles.button}>
+              <Text style={styles.buttonText}>Proceed payment</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
       </View>
     );
   }

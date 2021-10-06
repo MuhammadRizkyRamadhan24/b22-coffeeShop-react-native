@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import {DrawerItem} from '@react-navigation/drawer';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Head from '../component/HeadDrawer';
@@ -9,77 +9,79 @@ export function DrawerContent(props) {
   return (
     <View style={styles.wrapper}>
       <Head />
-      <View style={styles.wrapperItem}>
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="face" color="#6A4029" size={30} />
-              <Text style={styles.label}>Edit Profile</Text>
-            </View>
-          )}
-          drawerSt
-          onPress={() => {
-            props.navigation.navigate('EditProfile');
-          }}
-        />
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="home" color="#6A4029" size={30} />
-              <Text style={styles.label}>Home</Text>
-            </View>
-          )}
-          drawerSt
-          onPress={() => {
-            props.navigation.navigate('Home');
-          }}
-        />
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="search" color="#6A4029" size={30} />
-              <Text style={styles.label}>Search</Text>
-            </View>
-          )}
-          onPress={() => {
-            props.navigation.navigate('Search');
-          }}
-        />
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="attach-money" color="#6A4029" size={30} />
-              <Text style={styles.label}>Promo</Text>
-            </View>
-          )}
-          onPress={() => {
-            props.navigation.navigate('Promo');
-          }}
-        />
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="notes" color="#6A4029" size={30} />
-              <Text style={styles.label}>Privacy Policy</Text>
-            </View>
-          )}
-        />
-        <DrawerItem
-          style={styles.item}
-          label={() => (
-            <View style={styles.wrapperLabel}>
-              <MaterialIcons name="security" color="#6A4029" size={30} />
-              <Text style={styles.label}>Security</Text>
-            </View>
-          )}
-        />
-      </View>
-      <Signout />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.wrapperItem}>
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="face" color="#6A4029" size={30} />
+                <Text style={styles.label}>Edit Profile</Text>
+              </View>
+            )}
+            drawerSt
+            onPress={() => {
+              props.navigation.navigate('EditProfile');
+            }}
+          />
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="home" color="#6A4029" size={30} />
+                <Text style={styles.label}>Home</Text>
+              </View>
+            )}
+            drawerSt
+            onPress={() => {
+              props.navigation.navigate('Home');
+            }}
+          />
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="search" color="#6A4029" size={30} />
+                <Text style={styles.label}>Search</Text>
+              </View>
+            )}
+            onPress={() => {
+              props.navigation.navigate('Search');
+            }}
+          />
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="attach-money" color="#6A4029" size={30} />
+                <Text style={styles.label}>Promo</Text>
+              </View>
+            )}
+            onPress={() => {
+              props.navigation.navigate('Promo');
+            }}
+          />
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="notes" color="#6A4029" size={30} />
+                <Text style={styles.label}>Privacy Policy</Text>
+              </View>
+            )}
+          />
+          <DrawerItem
+            style={styles.item}
+            label={() => (
+              <View style={styles.wrapperLabel}>
+                <MaterialIcons name="security" color="#6A4029" size={30} />
+                <Text style={styles.label}>Security</Text>
+              </View>
+            )}
+          />
+        </View>
+        <Signout />
+      </ScrollView>
     </View>
   );
 }
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   wrapperItem: {
-    marginTop: 35,
+    marginTop: 10,
   },
   item: {
     justifyContent: 'center',

@@ -79,68 +79,73 @@ class Delivery extends Component {
             <Text style={styles.titleScreen}>Checkout</Text>
           </View>
         </View>
-        <View style={styles.wrapperTitle}>
-          <Text style={styles.title}>Delivery</Text>
-        </View>
-        <View style={styles.wrapperSubtitle}>
-          <Text style={styles.subtitle}>Address details</Text>
-        </View>
-        <View style={styles.wrapperAddress}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={styles.textAddressBold}>Iskandar Street</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.wrapperTitle}>
+            <Text style={styles.title}>Delivery</Text>
+          </View>
+          <View style={styles.wrapperSubtitle}>
+            <Text style={styles.subtitle}>Address details</Text>
+          </View>
+          <View style={styles.wrapperAddress}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text style={styles.textAddressBold}>Iskandar Street</Text>
 
-            <Text style={styles.textAddress}>
-              {this.props.user.data.address}
-            </Text>
-            <Text style={styles.textAddress}>
-              {this.props.user.data.phone_number}
-            </Text>
-          </ScrollView>
-        </View>
-        <View style={styles.wrapperSubtitle}>
-          <Text style={styles.subtitle}>Delivery methods</Text>
-        </View>
-        <View style={styles.wrapperRadio}>
-          <Radio.Group
-            name="radio-button"
-            value={this.state.delivery_method}
-            onChange={nextValue => {
-              this.setState({delivery_method: nextValue});
-            }}>
-            <Radio
-              accessibilityLabel="test"
-              colorScheme="gray"
-              value="Door delivery">
-              <Text style={styles.radio}>Door delivery</Text>
-            </Radio>
-            <Radio
-              accessibilityLabel="test"
-              colorScheme="gray"
-              value="Pick up at store">
-              <Text style={styles.radio}>Pick up at store</Text>
-            </Radio>
-            <Radio accessibilityLabel="test" colorScheme="gray" value="Dine in">
-              <Text style={styles.radio}>Dine in</Text>
-            </Radio>
-          </Radio.Group>
-        </View>
+              <Text style={styles.textAddress}>
+                {this.props.user.data.address}
+              </Text>
+              <Text style={styles.textAddress}>
+                {this.props.user.data.phone_number}
+              </Text>
+            </ScrollView>
+          </View>
+          <View style={styles.wrapperSubtitle}>
+            <Text style={styles.subtitle}>Delivery methods</Text>
+          </View>
+          <View style={styles.wrapperRadio}>
+            <Radio.Group
+              name="radio-button"
+              value={this.state.delivery_method}
+              onChange={nextValue => {
+                this.setState({delivery_method: nextValue});
+              }}>
+              <Radio
+                accessibilityLabel="test"
+                colorScheme="gray"
+                value="Door delivery">
+                <Text style={styles.radio}>Door delivery</Text>
+              </Radio>
+              <Radio
+                accessibilityLabel="test"
+                colorScheme="gray"
+                value="Pick up at store">
+                <Text style={styles.radio}>Pick up at store</Text>
+              </Radio>
+              <Radio
+                accessibilityLabel="test"
+                colorScheme="gray"
+                value="Dine in">
+                <Text style={styles.radio}>Dine in</Text>
+              </Radio>
+            </Radio.Group>
+          </View>
 
-        {this.state.delivery_method !== '' &&
-        this.props.user.data.address !== null ? (
-          <TouchableOpacity
-            onPress={() =>
-              this.props.navigation.navigate('Payment', {
-                orders: this.state.orders,
-              })
-            }
-            style={styles.button}>
-            <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={this.alertButton} style={styles.button}>
-            <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
-          </TouchableOpacity>
-        )}
+          {this.state.delivery_method !== '' &&
+          this.props.user.data.address !== null ? (
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('Payment', {
+                  orders: this.state.orders,
+                })
+              }
+              style={styles.button}>
+              <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={this.alertButton} style={styles.button}>
+              <Text style={styles.buttonTextPayment}>Proceed to payment</Text>
+            </TouchableOpacity>
+          )}
+        </ScrollView>
       </View>
     );
   }

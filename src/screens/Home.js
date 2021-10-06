@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   subtitle: {
-    width: 260,
+    width: '65%',
   },
   wrapperCard: {
     marginVertical: 24,

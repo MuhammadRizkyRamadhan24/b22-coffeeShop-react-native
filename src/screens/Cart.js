@@ -149,11 +149,11 @@ class Cart extends Component {
             </View>
           )}
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Coupon')}
           style={styles.button}>
           <Text style={styles.buttonTextCoupon}>Apply Delivery Coupons</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.wrapperContent}>
           <Text style={styles.contentTextLeft}>Item Total</Text>
           <View style={styles.contentRight}>
@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
   },
   wrapperCard: {
-    height: 360,
-    marginTop: 20,
+    flex: 6,
+    marginVertical: 20,
     width: 320,
   },
   button: {
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
   },
   wrapperContent: {
     width: 320,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
   },

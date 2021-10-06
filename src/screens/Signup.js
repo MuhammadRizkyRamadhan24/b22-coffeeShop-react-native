@@ -62,7 +62,9 @@ class Signup extends Component {
     return (
       <ImageBackground source={background} style={styles.background}>
         <View style={styles.wrapper}>
-          <Text style={styles.text1}>Signup</Text>
+          <View style={styles.wrapperText}>
+            <Text style={styles.text1}>Signup</Text>
+          </View>
           <Formik
             validationSchema={validationSchema}
             initialValues={{email: '', password: '', phoneNumber: ''}}
@@ -70,6 +72,7 @@ class Signup extends Component {
             {({handleChange, handleBlur, handleSubmit, errors, values}) => (
               <View style={styles.formInput}>
                 <Input
+                  width={'80%'}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
@@ -84,6 +87,7 @@ class Signup extends Component {
                   <Text style={styles.textError}>{errors.email}</Text>
                 ) : null}
                 <Input
+                  width={'80%'}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
@@ -98,6 +102,7 @@ class Signup extends Component {
                   <Text style={styles.textError}>{errors.password}</Text>
                 ) : null}
                 <Input
+                  width={'80%'}
                   onChangeText={handleChange('phoneNumber')}
                   onBlur={handleBlur('phoneNumber')}
                   value={values.phoneNumber}
@@ -148,45 +153,52 @@ const styles = StyleSheet.create({
   text1: {
     fontFamily: 'Poppins-Bold',
     color: '#fff',
-    fontSize: 65,
-    marginTop: 40,
-    marginLeft: -95,
+    fontSize: 60,
+    marginLeft: '10%',
+    marginTop: '10%',
+  },
+  wrapperText: {
+    flex: 1,
+    width: '100%',
   },
   formInput: {
-    marginTop: 270,
-    width: 340,
+    flex: 2,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     color: '#fff',
     fontFamily: 'Poppins-SemiBold',
     borderColor: '#fff',
+    width: '80%',
   },
   buttonBrown: {
     marginTop: 30,
     marginBottom: 10,
-    width: 340,
-    height: 70,
+    width: '80%',
+    height: '12%',
     backgroundColor: '#6A4029',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   fontButton: {
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: 'Poppins-Bold',
     color: '#fff',
   },
   buttonWhite: {
     marginVertical: 10,
-    width: 340,
-    height: 70,
+    width: '80%',
+    height: '12%',
     backgroundColor: '#FFF',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   fontButton2: {
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: 'Poppins-Regular',
     color: '#000',
   },
